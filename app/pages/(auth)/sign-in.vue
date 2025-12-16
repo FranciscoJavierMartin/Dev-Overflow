@@ -1,5 +1,5 @@
 <template>
-  <div />
+  <AuthSignInForm />
 </template>
 
 <script setup lang="ts">
