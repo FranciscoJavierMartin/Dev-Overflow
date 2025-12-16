@@ -31,6 +31,23 @@ export default defineNuxtConfig({
     classSuffix: '',
   },
 
+  fonts: {
+    families: [
+      {
+        name: 'Inter',
+        provider: 'local',
+        weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+        src: '@/assets/fonts/InterVF.ttf',
+      },
+      {
+        name: 'Space Grotesk',
+        provider: 'local',
+        weights: [300, 400, 500, 600, 700],
+        src: '@/assets/fonts/SpaceGroteskVF.ttf',
+      },
+    ],
+  },
+
   nitro: {
     preset: 'bun',
   },
