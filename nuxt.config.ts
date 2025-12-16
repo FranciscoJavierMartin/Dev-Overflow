@@ -25,4 +25,8 @@ export default defineNuxtConfig({
      */
     componentDir: "@/components/ui",
   },
+
+  nitro: {
+    preset: "bun",
+  },
 });
