@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -8,6 +8,9 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
+  --breakpoint-xs: 420px;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -39,6 +42,34 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-primary-100: var(--primary-100);
+  --color-primary-500: var(--primary-500);
+
+  --color-dark-100: #000000;
+  --color-dark-200: #0f1117;
+  --color-dark-300: #151821;
+  --color-dark-400: #212734;
+  --color-dark-500: #101012;
+
+  --color-light-400: #858ead;
+  --color-light-500: #7b8ec8;
+  --color-light-700: #dce3f1;
+  --color-light-800: #f4f6f8;
+  --color-light-850: #fdfdfd;
+  --color-light-900: #ffffff;
+
+  --shadow-light-100:
+    0px 12px 20px 0px rgba(184, 184, 184, 0.03),
+    0px 6px 12px 0px rgba(184, 184, 184, 0.02),
+    0px 2px 4px 0px rgba(184, 184, 184, 0.03);
+  --shadow-light-200: 10px 10px 20px 0px rgba(218, 213, 213, 0.1);
+  --shadow-light-300: -10px 10px 20px 0px rgba(218, 213, 213, 0.1);
+  --shadow-dark-100: 0px 2px 10px 0px rgba(46, 52, 56, 0.1);
+  --shadow-dark-200: 2px 0px 20px 0px rgba(39, 36, 36, 0.04);
+
+  --font-inter: 'Inter';
+  --font-space-grotesk: 'Space Grotesk';
 }
 
 :root {
@@ -74,6 +105,10 @@
   --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
+
+  --primary-100: #fff1e6;
+  --primary-300: #e2995f;
+  --primary-500: #ff7000;
 }
 
 .dark {
@@ -111,10 +146,132 @@
 }
 
 @layer base {
+  :root {
+    --radius: 0.5rem;
+  }
+
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
+  }
+
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@layer utilities {
+  /* Flex utilities */
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .flex-between {
+    @apply flex items-center justify-between;
+  }
+
+  .flex-start {
+    @apply flex items-center justify-start;
+  }
+
+  .primary-gradient {
+    background: linear-gradient(
+      129deg,
+      var(--primary-500) 0%,
+      var(--primary-300) 100%
+    );
+  }
+
+  .small-medium {
+    @apply text-xs leading-[15.6px] font-medium;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .bg-clip-text {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .subtitle-regular {
+    @apply text-[10px] leading-[13px] font-normal;
+  }
+
+  .subtitle-medium {
+    @apply text-[10px] leading-[13px] font-medium;
+  }
+
+  .h1-bold {
+    @apply text-3xl leading-[42px] font-bold tracking-tighter;
+  }
+
+  .h2-bold {
+    @apply text-2xl leading-[31.2px] font-bold;
+  }
+
+  .h3-bold {
+    @apply text-xl leading-[26px] font-bold;
+  }
+
+  .h3-semibold {
+    @apply text-xl leading-[24.8px] font-semibold;
+  }
+
+  .paragraph-regular {
+    @apply text-base leading-[22.4px] font-normal;
+  }
+
+  .paragraph-medium {
+    @apply text-base leading-[22.4px] font-medium;
+  }
+
+  .paragraph-semibold {
+    @apply text-base leading-[20.8px] font-semibold;
+  }
+
+  .base-bold {
+    @apply text-lg leading-[140%] font-bold;
+  }
+
+  .base-medium {
+    @apply text-lg leading-[25.2px] font-medium;
+  }
+
+  .base-semibold {
+    @apply text-lg leading-[25.2px] font-semibold;
+  }
+
+  .body-medium {
+    @apply text-sm leading-[18.2px] font-medium;
+  }
+
+  .body-regular {
+    @apply text-sm leading-[19.6px] font-normal;
+  }
+
+  .btn-secondary {
+    @apply bg-light-800 dark:bg-dark-400;
+  }
+
+  .btn-tertiary {
+    @apply bg-light-700 dark:bg-dark-300;
+  }
+
+  .placeholder {
+    @apply placeholder:text-light-400 dark:placeholder:text-light-500;
   }
 }
