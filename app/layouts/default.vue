@@ -7,6 +7,7 @@
         href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
       />
     </Head>
+    <NavigationNavbar />
     <div class="flex">
       <main
         class="flex min-h-screen flex-1 flex-col px-6 pt-36 pb-6 max-md:pb-14 sm:px-14"
