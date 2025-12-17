@@ -37,9 +37,12 @@
 
 <script setup lang="ts">
 import { useForm } from '@tanstack/vue-form';
-import { toast } from 'vue-sonner';
 import * as v from 'valibot';
+import { authClient } from '~~/lib/auth-client';
 import { ROUTES } from '@/utils/constants/routes';
+
+const { showErrorToast } = useToast();
+const router = useRouter();
 
 const authFormSchema = v.object({
   email: v.pipe(
@@ -62,21 +65,23 @@ const form = useForm({
     onSubmit: authFormSchema,
   },
   onSubmit: async ({ value }) => {
-    toast('You submitted the following values:', {
-      description: h(
-        'pre',
-        {
-          class:
-            'bg-code text-code-foreground mt-2 w-[320px] overflow-x-auto rounded-md p-4',
-        },
-        h('code', JSON.stringify(value, null, 2)),
-      ),
-      position: 'bottom-right',
-      class: 'flex flex-col gap-2',
-      style: {
-        '--border-radius': 'calc(var(--radius)  + 4px)',
+    await authClient.signIn.email(
+      {
+        email: value.email,
+        password: value.password,
+        callbackURL: '/',
       },
-    });
+      {
+        onSuccess() {
+          router.replace({ name: ROUTES.home });
+        },
+        onError(ctx) {
+          if (ctx.error.message) {
+            showErrorToast(ctx.error.message);
+          }
+        },
+      },
+    );
   },
 });
 
