@@ -13,6 +13,11 @@
         placeholder="Password"
         :form-field="form.Field"
       />
+      <FieldInputCheckbox
+        name="rememberMe"
+        label="Remember me"
+        :form-field="form.Field"
+      />
       <Button
         type="submit"
         :disabled="form.state.isSubmitting"
@@ -51,12 +56,14 @@ const router = useRouter();
 const authFormSchema = v.object({
   emailOrUsername: v.union([emailSchema, usernameSchema]),
   password: passwordSignInSchema,
+  rememberMe: v.boolean(),
 });
 
 const form = useForm({
   defaultValues: {
     emailOrUsername: '',
     password: '',
+    rememberMe: false,
   },
   validators: {
     onSubmit: authFormSchema,
@@ -67,8 +74,8 @@ const form = useForm({
         {
           email: value.emailOrUsername,
           password: value.password,
+          rememberMe: value.rememberMe,
           callbackURL: '/',
-          rememberMe: true,
         },
         {
           onSuccess() {
@@ -86,8 +93,8 @@ const form = useForm({
         {
           username: value.emailOrUsername,
           password: value.password,
+          rememberMe: value.rememberMe,
           callbackURL: '/',
-          rememberMe: true,
         },
         {
           onSuccess() {

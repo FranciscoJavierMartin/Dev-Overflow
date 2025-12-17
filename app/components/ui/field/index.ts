@@ -33,6 +33,7 @@ export { default as FieldDescription } from './FieldDescription.vue';
 export { default as FieldError } from './FieldError.vue';
 export { default as FieldErrorList } from './FieldErrorList.vue';
 export { default as FieldGroup } from './FieldGroup.vue';
+export { default as FieldInputCheckbox } from './FieldInputCheckbox.vue';
 export { default as FieldInputPassword } from './FieldInputPassword.vue';
 export { default as FieldInputTag } from './FieldInputTag.vue';
 export { default as FieldInputTagBadge } from './FieldInputTagBadge.vue';
