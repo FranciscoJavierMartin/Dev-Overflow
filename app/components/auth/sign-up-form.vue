@@ -55,9 +55,12 @@
 
 <script setup lang="ts">
 import { useForm } from '@tanstack/vue-form';
-
 import * as v from 'valibot';
+import { authClient } from '~~/lib/auth-client';
 import { ROUTES } from '@/utils/constants/routes';
+
+const { showErrorToast } = useToast();
+const router = useRouter();
 
 const authFormSchema = v.pipe(
   v.object({
@@ -116,7 +119,26 @@ const form = useForm({
   validators: {
     onSubmit: authFormSchema,
   },
-  onSubmit: async ({ value }) => {},
+  onSubmit: async ({ value }) => {
+    await authClient.signUp.email(
+      {
+        email: value.email,
+        name: value.name,
+        password: value.password,
+        callbackURL: '/',
+      },
+      {
+        onSuccess() {
+          router.replace({ name: ROUTES.home });
+        },
+        onError(ctx) {
+          if (ctx.error.message) {
+            showErrorToast(ctx.error.message);
+          }
+        },
+      },
+    );
+  },
 });
 
 const buttonText = computed<string>(() =>
