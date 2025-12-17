@@ -106,6 +106,7 @@ const form = useForm({
         email: value.email,
         name: value.name,
         password: value.password,
+        username: value.username,
         callbackURL: '/',
       },
       {
