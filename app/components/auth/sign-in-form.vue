@@ -1,5 +1,9 @@
 <template>
-  <form class="mt-10 space-y-6" @submit.prevent="form.handleSubmit">
+  <form
+    id="sign-in"
+    class="mt-10 space-y-6"
+    @submit.prevent="form.handleSubmit"
+  >
     <FieldGroup>
       <FieldInputText
         name="emailOrUsername"

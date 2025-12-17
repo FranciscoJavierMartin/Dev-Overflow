@@ -5,16 +5,15 @@
         <Checkbox
           :id="field.name"
           :name="field.name"
+          :aria-invalid="isInvalidInput(field)"
           :model-value="field.state.value"
           @update:model-value="
             (checked) => field.handleChange(checked === true)
           "
         />
-        <FieldContent>
-          <FieldLabel :for="field.name">
-            {{ label }}
-          </FieldLabel>
-        </FieldContent>
+        <FieldLabel :for="field.name" class="font-normal">
+          {{ label }}
+        </FieldLabel>
       </Field>
     </template>
   </component>
