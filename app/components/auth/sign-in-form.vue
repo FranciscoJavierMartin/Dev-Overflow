@@ -2,10 +2,9 @@
   <form class="mt-10 space-y-6" @submit.prevent="form.handleSubmit">
     <FieldGroup>
       <FieldInputText
-        name="email"
-        label="Email address"
-        placeholder="Email address"
-        type="email"
+        name="emailOrUsername"
+        label="Email address or username"
+        placeholder="Email address or username"
         :form-field="form.Field"
       />
       <FieldInputPassword
@@ -43,42 +42,65 @@ import { ROUTES } from '@/utils/constants/routes';
 import {
   emailSchema,
   passwordSignInSchema,
+  usernameSchema,
 } from '~~/shared/utils/validations/schemas/auth';
 
 const { showErrorToast } = useToast();
 const router = useRouter();
 
 const authFormSchema = v.object({
-  email: emailSchema,
+  emailOrUsername: v.union([emailSchema, usernameSchema]),
   password: passwordSignInSchema,
 });
 
 const form = useForm({
   defaultValues: {
-    email: '',
+    emailOrUsername: '',
     password: '',
   },
   validators: {
     onSubmit: authFormSchema,
   },
   onSubmit: async ({ value }) => {
-    await authClient.signIn.email(
-      {
-        email: value.email,
-        password: value.password,
-        callbackURL: '/',
-      },
-      {
-        onSuccess() {
-          router.replace({ name: ROUTES.home });
+    if (value.emailOrUsername.includes('@')) {
+      await authClient.signIn.email(
+        {
+          email: value.emailOrUsername,
+          password: value.password,
+          callbackURL: '/',
+          rememberMe: true,
         },
-        onError(ctx) {
-          if (ctx.error.message) {
-            showErrorToast(ctx.error.message);
-          }
+        {
+          onSuccess() {
+            router.replace({ name: ROUTES.home });
+          },
+          onError(ctx) {
+            if (ctx.error.message) {
+              showErrorToast(ctx.error.message);
+            }
+          },
         },
-      },
-    );
+      );
+    } else {
+      await authClient.signIn.username(
+        {
+          username: value.emailOrUsername,
+          password: value.password,
+          callbackURL: '/',
+          rememberMe: true,
+        },
+        {
+          onSuccess() {
+            router.replace({ name: ROUTES.home });
+          },
+          onError(ctx) {
+            if (ctx.error.message) {
+              showErrorToast(ctx.error.message);
+            }
+          },
+        },
+      );
+    }
   },
 });
 
