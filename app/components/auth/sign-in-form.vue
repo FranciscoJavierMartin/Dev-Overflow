@@ -40,20 +40,17 @@ import { useForm } from '@tanstack/vue-form';
 import * as v from 'valibot';
 import { authClient } from '~~/lib/auth-client';
 import { ROUTES } from '@/utils/constants/routes';
+import {
+  emailSchema,
+  passwordSignInSchema,
+} from '~~/shared/utils/validations/schemas/auth';
 
 const { showErrorToast } = useToast();
 const router = useRouter();
 
 const authFormSchema = v.object({
-  email: v.pipe(
-    v.string(),
-    v.nonEmpty('Email is required'),
-    v.email('Please provide a valid email address'),
-  ),
-  password: v.pipe(
-    v.string(),
-    v.minLength(6, 'Password must be at least 6 characters long'),
-  ),
+  email: emailSchema,
+  password: passwordSignInSchema,
 });
 
 const form = useForm({
