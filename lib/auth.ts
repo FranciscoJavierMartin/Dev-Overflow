@@ -1,7 +1,8 @@
 import { betterAuth } from 'better-auth';
-import { PrismaClient } from '@/generated/prisma/client';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
+import { username } from 'better-auth/plugins';
 import { PrismaPg } from '@prisma/adapter-pg';
+import { PrismaClient } from '@/generated/prisma/client';
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
 const prisma = new PrismaClient({ adapter });
@@ -13,7 +14,12 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
-  plugins: [],
+  plugins: [
+    username({
+      usernameValidator: (username: string): boolean =>
+        /^[a-zA-Z0-9_]+$/.test(username),
+    }),
+  ],
   user: {
     modelName: 'User',
   },
