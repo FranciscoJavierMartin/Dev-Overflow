@@ -17,6 +17,7 @@
           <slot />
         </div>
       </main>
+      <NavigationRightSidebar />
     </div>
   </div>
 </template>
