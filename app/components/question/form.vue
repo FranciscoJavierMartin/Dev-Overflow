@@ -20,6 +20,9 @@
             >
               Detailed explanation of your problem
             </FieldLabel>
+            <FieldDescription class="body-regular text-light-500 mt-2.5">
+              Introduce the problem and expand on what you've put in the title.
+            </FieldDescription>
             <QuestionEditor
               :id="field.name"
               :name="field.name"
@@ -28,9 +31,6 @@
               :aria-invalid="isInvalidInput(field)"
               @input="field.handleChange"
             />
-            <FieldDescription class="body-regular text-light-500 mt-2.5">
-              Introduce the problem and expand on what you've put in the title.
-            </FieldDescription>
             <FieldErrorList
               v-if="isInvalidInput(field)"
               :errors="field.state.meta.errors"
@@ -83,7 +83,7 @@ const askQuestionSchema = v.object({
 const form = useForm({
   defaultValues: {
     title: 'Test title',
-    content: 'Test content',
+    content: '',
     tags: [] as string[],
   },
   validators: {
