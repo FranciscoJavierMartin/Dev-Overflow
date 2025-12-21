@@ -31,7 +31,7 @@ const props = defineProps<{
 let editorContext;
 try {
   editorContext = useTiptapContext();
-} catch (e) {
+} catch {
   // No provider found, this editor will manage its own state
   editorContext = null;
 }

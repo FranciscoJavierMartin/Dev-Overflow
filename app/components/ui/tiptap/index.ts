@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-invalid-void-type */
 import type { Editor } from '@tiptap/vue-3';
 import type { ComputedRef, Ref } from 'vue';
 import { createContext } from 'reka-ui';
@@ -5,6 +6,7 @@ import { createContext } from 'reka-ui';
 // Define the TiptapContext type
 export interface TiptapContext {
   editor: ComputedRef<Editor | null>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   editorNodes: Ref<any[]>;
   sidebarVisible: Ref<boolean>;
   selectedNodeId: Ref<string>;

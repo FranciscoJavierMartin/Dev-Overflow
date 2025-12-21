@@ -14,9 +14,11 @@ const props = defineProps<{
 }>();
 
 // State management for the Tiptap context
-const sidebarVisible = defineModel('sidebarVisible', { default: true });
+const sidebarVisible = defineModel<boolean>('sidebarVisible', {
+  default: true,
+});
 const selectedNodeId = ref('');
-const editorNodes = ref([]);
+const editorNodes = ref<unknown>([]);
 const content = ref('');
 
 // Update editor nodes when content changes
@@ -175,13 +177,13 @@ function selectNode(id) {
   // Find the node in the document and set the selection to it
   const nodePos = findNodePositionById(id);
   if (nodePos !== null) {
-    const { from, to } = nodePos;
+    const { from } = nodePos;
     props.editor.chain().focus().setNodeSelection(from).run();
   }
 }
 
 // Find node position by ID
-function findNodePositionById(id) {
+function findNodePositionById(id: string) {
   if (!props.editor) return null;
 
   let result = null;
@@ -197,7 +199,7 @@ function findNodePositionById(id) {
 }
 
 // Delete a node by id
-function deleteNode(id) {
+function deleteNode(id: string) {
   if (!props.editor) return;
 
   // Find the node position in the document
@@ -233,7 +235,7 @@ function deleteNode(id) {
 }
 
 // Duplicate a node by id
-function duplicateNode(id) {
+function duplicateNode(id: string) {
   if (!props.editor) return;
 
   // Find the node position in the document

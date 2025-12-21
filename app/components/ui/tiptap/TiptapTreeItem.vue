@@ -16,7 +16,7 @@
     <div class="flex w-full items-center gap-2">
       <!-- Icon and name -->
       <div class="flex flex-1 items-center gap-2 overflow-hidden">
-        <Icon :name="node.icon" class="h-4 w-4 flex-shrink-0" />
+        <Icon :name="node.icon" class="size-4 shrink-0" />
         <span class="truncate">{{ node.name }}</span>
         <span
           v-if="node.content"
@@ -34,10 +34,10 @@
               <Button
                 size="icon"
                 variant="ghost"
-                class="h-6 w-6"
+                class="size-6"
                 @click.stop="handleDuplicate"
               >
-                <Icon name="mdi:content-copy" class="h-3.5 w-3.5" />
+                <Icon name="mdi:content-copy" class="size-3.5" />
               </Button>
             </TooltipTrigger>
             <TooltipContent>Duplicate</TooltipContent>
@@ -48,10 +48,10 @@
               <Button
                 size="icon"
                 variant="ghost"
-                class="text-destructive hover:text-destructive h-6 w-6"
+                class="text-destructive hover:text-destructive size-6"
                 @click.stop="handleDelete"
               >
-                <Icon name="mdi:delete" class="h-3.5 w-3.5" />
+                <Icon name="mdi:delete" class="size-3.5" />
               </Button>
             </TooltipTrigger>
             <TooltipContent>Delete</TooltipContent>
@@ -69,9 +69,9 @@
         width: `calc(100% - ${instruction?.currentLevel * instruction?.indentPerLevel}px)`,
       }"
       :class="{
-        '!border-b-2': instruction?.type === 'reorder-below',
-        '!border-t-2': instruction?.type === 'reorder-above',
-        'rounded !border-2': instruction?.type === 'make-child',
+        'border-b-2!': instruction?.type === 'reorder-below',
+        'border-t-2!': instruction?.type === 'reorder-above',
+        'rounded border-2!': instruction?.type === 'make-child',
       }"
     />
   </TreeItem>
@@ -105,6 +105,7 @@ import { computed, h, ref, render, watchEffect } from 'vue';
 import Icon from './TiptapIcon.vue';
 
 const props = defineProps<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   item: FlattenedItem<any>;
 }>();
 
@@ -232,19 +233,22 @@ watchEffect((onCleanup) => {
 });
 
 // Handle node selection
-function handleClick(event) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function handleClick(event: any) {
   event.preventDefault();
   emits('select-node', node.value.id);
 }
 
 // Handle node duplication
-function handleDuplicate(event) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function handleDuplicate(event: any) {
   event.stopPropagation();
   emits('duplicate-node', node.value.id);
 }
 
 // Handle node deletion
-function handleDelete(event) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function handleDelete(event: any) {
   event.stopPropagation();
   emits('delete-node', node.value.id);
 }

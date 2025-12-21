@@ -128,6 +128,7 @@ const icons = {
 
 // Resolve the icon name
 const iconName = computed(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   () => ((icons as any)[props.name] as string) || props.name,
 );
 

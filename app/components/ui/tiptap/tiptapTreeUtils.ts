@@ -148,6 +148,7 @@ export function updateTiptapTree(
 }
 
 // Helper function to convert flat editor nodes to tree structure
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function editorNodesToTree(nodes: any[]): TiptapTreeItem[] {
   if (!nodes || !Array.isArray(nodes)) return [];
 
