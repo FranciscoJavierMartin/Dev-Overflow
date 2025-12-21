@@ -24,7 +24,7 @@
           <SheetClose as-child>
             <NuxtLink :to="{ name: ROUTES.signIn }">
               <Button
-                class="small-medium btn-secondary min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none"
+                class="small-medium btn-secondary min-h-10 w-full rounded-lg px-4 py-3 shadow-none"
               >
                 <span class="primary-gradient bg-clip-text">Sign In</span>
               </Button>
@@ -34,7 +34,7 @@
           <SheetClose as-child>
             <NuxtLink :to="{ name: ROUTES.signUp }">
               <Button
-                class="border-light-700 dark:border-dark-400 small-medium btn-tertiary text-dark-400 dark:text-light-900 min-h-[41px] w-full rounded-lg border px-4 py-3 shadow-none"
+                class="border-light-700 dark:border-dark-400 small-medium btn-tertiary text-dark-400 dark:text-light-900 min-h-10 w-full rounded-lg border px-4 py-3 shadow-none"
               >
                 Sign Up
               </Button>
