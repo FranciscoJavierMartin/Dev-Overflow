@@ -8,7 +8,7 @@
     <p
       :class="{
         // TODO: Check later
-        'max-lg:hidden': !isMobileNav,
+        // 'max-lg:hidden': !isMobileNav,
         'base-bold': isActive,
         'base-medium': !isActive,
       }"
