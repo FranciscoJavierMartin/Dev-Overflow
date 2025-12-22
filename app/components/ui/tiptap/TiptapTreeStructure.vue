@@ -44,6 +44,7 @@ import TiptapTreeItem from './TiptapTreeItem.vue';
 import { editorNodesToTree } from './tiptapTreeUtils';
 
 const props = defineProps<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   editorNodes?: any[];
   class?: HTMLAttributes['class'];
 }>();
@@ -105,7 +106,11 @@ function handleDeleteNode(id: string) {
 }
 
 // Handle node reordering
-function handleReorderNodes(params) {
+function handleReorderNodes(params: {
+  sourceId: string;
+  targetId: string;
+  position: 'before' | 'after';
+}) {
   if (reorderNodes) {
     reorderNodes(params);
   } else {
@@ -133,9 +138,9 @@ watchEffect((onCleanup) => {
 
         const sourceId = source.data.id as string;
         const target = location.current.dropTargets[0];
-        const targetId = target.data.id as string;
+        const targetId = target?.data.id as string;
 
-        const instruction = extractInstruction(target.data);
+        const instruction = extractInstruction(target!.data);
 
         if (instruction !== null) {
           if (instruction.type === 'reorder-above') {
