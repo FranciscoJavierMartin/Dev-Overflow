@@ -20,6 +20,9 @@ export const auth = betterAuth({
         /^[a-zA-Z0-9_]+$/.test(username),
     }),
   ],
+  telemetry: {
+    enabled: false,
+  },
   user: {
     modelName: 'User',
   },

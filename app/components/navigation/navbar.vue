@@ -16,10 +16,10 @@
     <div class="flex-between gap-5">
       <NavigationTheme />
       <UserAvatar
-        v-if="session.data?.user.id"
-        :id="session.data.user.id"
-        :name="session.data.user.name"
-        :image-url="session.data.user.image"
+        v-if="user"
+        :id="user.id"
+        :name="user.name"
+        :image-url="user.image"
       />
       <NavigationMobileNavigation />
     </div>
@@ -29,7 +29,6 @@
 <script setup lang="ts">
 import siteLogo from '@/assets/images/site-logo.svg';
 import { ROUTES } from '@/utils/constants/routes';
-import { authClient } from '~~/lib/auth-client';
 
-const session = authClient.useSession();
+const { user } = useAuth();
 </script>

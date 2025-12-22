@@ -21,10 +21,10 @@
         </SheetClose>
 
         <div class="flex flex-col gap-3">
-          <SheetClose v-if="session.data?.user.id">
+          <SheetClose v-if="user?.id">
             <Button
               class="base-medium w-fit bg-transparent! px-4 py-3"
-              @click="authClient.signOut"
+              @click="signOut"
             >
               <LogOut class="size-5 text-black dark:text-white" />
               <span class="text-dark-300 dark:text-light-900">Log Out</span>
@@ -61,7 +61,6 @@
 import { Menu, LogOut } from 'lucide-vue-next';
 import siteLogo from '@/assets/images/site-logo.svg';
 import { ROUTES } from '@/utils/constants/routes';
-import { authClient } from '~~/lib/auth-client';
 
-const session = authClient.useSession();
+const { user, signOut } = useAuth();
 </script>
