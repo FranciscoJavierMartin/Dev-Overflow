@@ -31,7 +31,8 @@ function updateEditorNodes() {
     return;
   }
 
-  const nodes = [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const nodes: any[] = [];
 
   // Process all nodes in the document
   props.editor.state.doc.descendants((node, pos) => {
@@ -63,13 +64,14 @@ function updateEditorNodes() {
           nodeContent = getTextContentPreview(node);
           depth = getNodeDepth(pos);
           break;
-        case 'heading':
+        case 'heading': {
           const level = node.attrs.level;
           nodeName = `Heading ${level}`;
           nodeIcon = `mdi:format-header-${level}`;
           nodeContent = getTextContentPreview(node);
           depth = getNodeDepth(pos);
           break;
+        }
         case 'bulletList':
           nodeName = 'Bullet List';
           nodeIcon = 'mdi:format-list-bulleted';
@@ -134,10 +136,12 @@ function updateEditorNodes() {
 }
 
 // Get the text content of a node (for previews)
-function getTextContentPreview(node) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getTextContentPreview(node: any) {
   let text = '';
 
-  node.descendants((child) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  node.descendants((child: any) => {
     if (child.isText) {
       text += child.text;
     }
@@ -152,7 +156,7 @@ function getTextContentPreview(node) {
 }
 
 // Get the depth level of a node based on its position
-function getNodeDepth(pos) {
+function getNodeDepth(pos: number): number {
   if (!props.editor) return 0;
 
   let depth = 0;
@@ -169,7 +173,7 @@ function getNodeDepth(pos) {
 }
 
 // Select node by id
-function selectNode(id) {
+function selectNode(id: string): void {
   if (!props.editor) return;
 
   selectedNodeId.value = id;
@@ -183,7 +187,7 @@ function selectNode(id) {
 }
 
 // Find node position by ID
-function findNodePositionById(id: string) {
+function findNodePositionById(id: string): { from: number; to: number } | null {
   if (!props.editor) return null;
 
   let result = null;
@@ -396,8 +400,9 @@ watch(
 
 // Provide context to child components
 provideTiptapContext({
-  editor: computed(() => props.editor),
-  editorNodes,
+  editor: computed(() => props.editor ?? null),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  editorNodes: editorNodes as any,
   sidebarVisible,
   selectedNodeId,
   toggleSidebar,
