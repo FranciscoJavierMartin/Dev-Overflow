@@ -8,8 +8,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "format": "prettier --write app/",
-    "lint": "eslint --fix app/",
+    "format": "prettier --write app/ server/",
+    "lint": "eslint --fix app/ server/",
     "prepare": "husky"
   },
   "dependencies": {

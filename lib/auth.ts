@@ -1,6 +1,6 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
-import { username } from 'better-auth/plugins';
+import { openAPI, username } from 'better-auth/plugins';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { PrismaClient } from '@/generated/prisma/client';
 
@@ -19,6 +19,7 @@ export const auth = betterAuth({
       usernameValidator: (username: string): boolean =>
         /^[a-zA-Z0-9_]+$/.test(username),
     }),
+    openAPI(),
   ],
   telemetry: {
     enabled: false,
@@ -34,5 +35,9 @@ export const auth = betterAuth({
   },
   verification: {
     modelName: 'Verification',
+  },
+  advanced: {
+    // TODO: Remove this before production. Only for testing purposes (Bruno)
+    disableOriginCheck: true,
   },
 });
