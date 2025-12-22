@@ -1,9 +1,9 @@
 <template>
   <template v-for="link in sidebarLinks" :key="link.label">
     <SheetClose v-if="isMobileNav" as-child>
-      <NavigationNavLink v-bind="link" user-id="1" />
+      <NavigationNavLink v-bind="link" :user-id />
     </SheetClose>
-    <NavigationNavLink v-else v-bind="link" user-id="1" />
+    <NavigationNavLink v-else v-bind="link" :user-id />
   </template>
 </template>
 
@@ -17,43 +17,44 @@ import {
   Tag,
   CircleQuestionMark,
 } from 'lucide-vue-next';
+import { ROUTES } from '@/utils/constants/routes';
 
-defineProps<{ isMobileNav?: boolean }>();
+defineProps<{ isMobileNav?: boolean; userId?: string }>();
 
 const sidebarLinks = [
   {
     icon: Home,
-    route: '/',
+    route: ROUTES.home,
     label: 'Home',
   },
   {
     icon: Users,
-    route: '/community',
+    route: ROUTES.community,
     label: 'Community',
   },
   {
     icon: Star,
-    route: '/collection',
+    route: ROUTES.collection,
     label: 'Collection',
   },
   {
     icon: Briefcase,
-    route: '/jobs',
+    route: ROUTES.jobs,
     label: 'Find Jobs',
   },
   {
     icon: Tag,
-    route: '/tags',
+    route: ROUTES.tags,
     label: 'Tags',
   },
   {
     icon: User,
-    route: '/profile',
+    route: ROUTES.profile,
     label: 'Profile',
   },
   {
     icon: CircleQuestionMark,
-    route: '/ask-question',
+    route: ROUTES.askQuestion,
     label: 'Ask a Question',
   },
 ];

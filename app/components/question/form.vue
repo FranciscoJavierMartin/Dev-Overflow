@@ -23,7 +23,7 @@
             <FieldDescription class="body-regular text-light-500 mt-2.5">
               Introduce the problem and expand on what you've put in the title.
             </FieldDescription>
-            <QuestionEditor
+            <LazyQuestionEditor
               :id="field.name"
               :name="field.name"
               :model-value="field.state.value"

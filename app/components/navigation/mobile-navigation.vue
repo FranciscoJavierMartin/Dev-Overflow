@@ -21,25 +21,36 @@
         </SheetClose>
 
         <div class="flex flex-col gap-3">
-          <SheetClose as-child>
-            <NuxtLink :to="{ name: ROUTES.signIn }">
-              <Button
-                class="small-medium btn-secondary min-h-10 w-full rounded-lg px-4 py-3 shadow-none"
-              >
-                <span class="primary-gradient bg-clip-text">Sign In</span>
-              </Button>
-            </NuxtLink>
+          <SheetClose v-if="session.data?.user.id">
+            <Button
+              class="base-medium w-fit bg-transparent! px-4 py-3"
+              @click="authClient.signOut"
+            >
+              <LogOut class="size-5 text-black dark:text-white" />
+              <span class="text-dark-300 dark:text-light-900">Log Out</span>
+            </Button>
           </SheetClose>
+          <template v-else>
+            <SheetClose as-child>
+              <NuxtLink :to="{ name: ROUTES.signIn }">
+                <Button
+                  class="small-medium btn-secondary min-h-10 w-full rounded-lg px-4 py-3 shadow-none"
+                >
+                  <span class="primary-gradient bg-clip-text">Sign In</span>
+                </Button>
+              </NuxtLink>
+            </SheetClose>
 
-          <SheetClose as-child>
-            <NuxtLink :to="{ name: ROUTES.signUp }">
-              <Button
-                class="border-light-700 dark:border-dark-400 small-medium btn-tertiary text-dark-400 dark:text-light-900 min-h-10 w-full rounded-lg border px-4 py-3 shadow-none"
-              >
-                Sign Up
-              </Button>
-            </NuxtLink>
-          </SheetClose>
+            <SheetClose as-child>
+              <NuxtLink :to="{ name: ROUTES.signUp }">
+                <Button
+                  class="border-light-700 dark:border-dark-400 small-medium btn-tertiary text-dark-400 dark:text-light-900 min-h-10 w-full rounded-lg border px-4 py-3 shadow-none"
+                >
+                  Sign Up
+                </Button>
+              </NuxtLink>
+            </SheetClose>
+          </template>
         </div>
       </div>
     </SheetContent>
@@ -47,7 +58,10 @@
 </template>
 
 <script setup lang="ts">
-import { Menu } from 'lucide-vue-next';
+import { Menu, LogOut } from 'lucide-vue-next';
 import siteLogo from '@/assets/images/site-logo.svg';
 import { ROUTES } from '@/utils/constants/routes';
+import { authClient } from '~~/lib/auth-client';
+
+const session = authClient.useSession();
 </script>

@@ -8,5 +8,6 @@ export const ROUTES = {
   question: 'question-id',
   signIn: 'sign-in',
   signUp: 'sign-up',
-  tags: 'tags-id',
+  tag: 'tags-id',
+  tags: 'tags',
 };

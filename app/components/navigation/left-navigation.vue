@@ -3,7 +3,7 @@
     class="no-scrollbar bg-light-900 dark:bg-dark-200 shadow-light-300 border-light-800 dark:border-dark-300 sticky top-0 left-0 flex h-screen flex-col justify-between overflow-y-auto border-r p-6 pt-36 max-sm:hidden lg:w-3xs dark:shadow-none"
   >
     <div class="flex flex-1 flex-col gap-6">
-      <NavigationNavLinks />
+      <NavigationNavLinks :user-id="session.data?.user.id" />
     </div>
     <div class="flex flex-col gap-3">
       <Button
