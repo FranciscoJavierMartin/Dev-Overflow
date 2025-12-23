@@ -38,6 +38,6 @@ export const auth = betterAuth({
   },
   advanced: {
     // TODO: Remove this before production. Only for testing purposes (Bruno)
-    disableOriginCheck: true,
+    disableOriginCheck: import.meta.dev,
   },
 });

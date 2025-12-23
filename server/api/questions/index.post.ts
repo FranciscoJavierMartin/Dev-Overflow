@@ -1,17 +1,41 @@
 import * as v from 'valibot';
-import { auth } from '~~/lib/auth';
+import type { User } from 'better-auth';
 import { askQuestionSchema } from '~~/shared/utils/validations/schemas/question';
-// import { prisma } from '~~/lib/prisma';
+import { prisma } from '~~/lib/prisma';
 
 export default defineEventHandler(async (event) => {
-  const _body = await readValidatedBody(event, v.parser(askQuestionSchema));
-  const session = await auth.api.getSession({
-    headers: event.headers,
-  });
+  const { title, content, tags } = await readValidatedBody(
+    event,
+    v.parser(askQuestionSchema),
+  );
+  const user: User = event.context.user;
 
-  // prisma.
+  // await prisma.$transaction(async (tx) => {
+  //   tags.map((tag) => {
+  //     tx.tag.upsert({
+  //       where: {
+  //         name: tag,
+  //       },
+  //     });
+  //   });
+  // const question = await tx.question.create({
+  //   data: {
+  //     title,
+  //     content,
+  //     authorId: user.id,
+  //   },
+  // });
+
+  // tags.forEach(async (tag) => {
+  //   tx.tag.upsert({
+  //     where: {
+  //       name:,
+  //     },
+  //   });
+  // });
+  // });
 
   return {
-    session,
+    user: event.context.user,
   };
 });
