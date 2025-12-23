@@ -1,0 +1,16 @@
+meta {
+  name: Account info
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/auth/account-info
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
