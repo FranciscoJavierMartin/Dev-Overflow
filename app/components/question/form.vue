@@ -47,8 +47,13 @@
         :default-values="[...form.state.values.tags]"
       />
       <div class="mt-16 flex justify-end">
-        <Button type="submit" class="text-light-900 primary-gradient w-fit">
-          Ask a question
+        <Button
+          type="submit"
+          :disabled="form.state.isSubmitting"
+          class="text-light-900 primary-gradient w-fit"
+        >
+          <Spinner v-if="form.state.isSubmitting" />
+          {{ form.state.isSubmitting ? 'Submitting' : 'Ask a question' }}
         </Button>
       </div>
     </FieldGroup>
@@ -57,7 +62,12 @@
 
 <script setup lang="ts">
 import { useForm } from '@tanstack/vue-form';
+import type { Question } from '@/generated/prisma/client';
 import { askQuestionSchema } from '~~/shared/utils/validations/schemas/question';
+import { ROUTES } from '~/utils/constants/routes';
+
+const { showErrorToast } = useToast();
+const router = useRouter();
 
 const form = useForm({
   defaultValues: {
@@ -69,7 +79,25 @@ const form = useForm({
     onSubmit: askQuestionSchema,
   },
   onSubmit: async ({ value }) => {
-    console.log(value);
+    try {
+      const { question } = await $fetch<{ question: Question | null }>(
+        '/api/questions',
+        {
+          method: 'POST',
+          body: {
+            ...value,
+          },
+        },
+      );
+
+      if (question) {
+        router.push({ name: ROUTES.question, params: { id: question.id } });
+      } else {
+        showErrorToast('Failed to ask a question. Please try again later');
+      }
+    } catch {
+      showErrorToast('Failed to ask a question. Please try again later');
+    }
   },
 });
 </script>
