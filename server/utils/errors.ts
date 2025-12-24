@@ -1,4 +1,4 @@
-import type { H3Error, H3Event } from 'h3';
+import type { EventHandlerRequest, H3Error, H3Event } from 'h3';
 
 export const ErrorCode = {
   VALIDATION_ERROR: 'VALIDATION_ERROR',
@@ -24,13 +24,17 @@ export class ApiError extends Error {
   constructor(params: ErrorDetails) {
     super(params.message);
     this.name = '[ApiError]';
+    this.code = params.code;
     this.statusCode = params.statusCode;
     this.details = params.details;
     this.timestamp = params.timestamp || new Date().toISOString();
   }
 }
 
-export function handleError(event: H3Event, error: unknown): H3Error {
+export function handleError(
+  event: H3Event<EventHandlerRequest> | undefined,
+  error: unknown,
+): H3Error {
   if (isError(error)) {
     return error;
   }

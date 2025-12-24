@@ -1,13 +1,13 @@
-import * as v from 'valibot';
 import type { User } from 'better-auth';
 import { askQuestionSchema } from '~~/shared/utils/validations/schemas/question';
 import { prisma } from '~~/lib/prisma';
 import type { Question } from '@/generated/prisma/client';
+import { validateRequestBody } from '~~/server/utils/validate-request-body';
 
 export default defineEventHandler(async (event) => {
-  const { title, content, tags } = await readValidatedBody(
+  const { title, content, tags } = await validateRequestBody(
     event,
-    v.parser(askQuestionSchema),
+    askQuestionSchema,
   );
   const user: User = event.context.user;
   let question: Question | null = null;
