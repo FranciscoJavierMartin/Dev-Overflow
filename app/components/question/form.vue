@@ -47,6 +47,7 @@
         :default-values="[...form.state.values.tags]"
       />
       <div class="mt-16 flex justify-end">
+        <!-- TODO: isSubmitting is not working -->
         <Button
           type="submit"
           :disabled="form.state.isSubmitting"
