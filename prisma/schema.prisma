@@ -90,7 +90,7 @@ model Question {
   author   User   @relation(fields: [authorId], references: [id])
   authorId String
 
-  tags TagsOnQuestions[]
+  tags Tag[]
 }
 
 model Tag {
@@ -101,14 +101,5 @@ model Tag {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  tagsOnQuestions TagsOnQuestions[]
-}
-
-model TagsOnQuestions {
-  question   Question @relation(fields: [questionId], references: [id])
-  questionId String
-  tag        Tag      @relation(fields: [tagId], references: [id])
-  tagId      String
-
-  @@id([questionId, tagId])
+  questionAsociated Question[]
 }
