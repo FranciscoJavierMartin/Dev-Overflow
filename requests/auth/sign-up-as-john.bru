@@ -1,0 +1,31 @@
+meta {
+  name: Sign up as John
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://localhost:3000/api/auth/sign-up/email
+  body: json
+  auth: inherit
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {
+    "name": "John Doe",
+    "username": "johndoe",
+    "email": "john@doe.com",
+    "password": "Password1.",
+    "image": "",
+    "callbackURL": "/"
+  }
+}
+
+settings {
+  encodeUrl: false
+  timeout: 0
+}
