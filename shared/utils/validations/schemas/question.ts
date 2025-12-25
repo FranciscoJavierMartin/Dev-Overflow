@@ -1,7 +1,7 @@
 import * as v from 'valibot';
 
 export const questionIdSchema = v.object({
-  id: v.pipe(v.string(), v.nonEmpty(), v.uuid()),
+  id: v.pipe(v.string(), v.nonEmpty(), v.cuid2()),
 });
 
 export const askQuestionSchema = v.object({

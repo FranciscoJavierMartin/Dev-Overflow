@@ -41,8 +41,7 @@ export function handleError(
 
   if (error instanceof ApiError) {
     const isValidationError = error.code === ErrorCode.VALIDATION_ERROR;
-
-    return createError({
+    const errorObject = {
       statusCode: error.statusCode,
       statusMessage: error.message,
       data: {
@@ -52,17 +51,25 @@ export function handleError(
           ? { errors: error.details.errors }
           : {}),
       },
-    });
+    };
+
+    logger.error(JSON.stringify(errorObject));
+
+    return createError(errorObject);
   }
 
-  return createError({
+  const errorObject = {
     statusCode: 500,
     statusMessage: 'Internal server Error',
     data: {
       code: ErrorCode.INTERNAL_SERVER_ERROR,
       timestamp: new Date().toISOString(),
     },
-  });
+  };
+
+  logger.error(JSON.stringify(errorObject));
+
+  return createError(errorObject);
 }
 
 export const Errors = {
