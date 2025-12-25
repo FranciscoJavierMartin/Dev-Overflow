@@ -1,0 +1,31 @@
+meta {
+  name: Edit question
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{baseUrl}}/questions/:id
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: cmjjuj4ek0003c97kicsmsfwo
+}
+
+body:json {
+  {
+    "title": "What library should I use to test in Vue?",
+    "content": "As title says, which library should I pick for my testing duties?",
+    "tags": [
+      "vue",
+      "testing"
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

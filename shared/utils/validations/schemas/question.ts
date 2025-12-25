@@ -1,5 +1,8 @@
 import * as v from 'valibot';
-import { prisma } from '~~/lib/prisma';
+
+export const questionIdSchema = v.object({
+  id: v.pipe(v.string(), v.nonEmpty(), v.uuid()),
+});
 
 export const askQuestionSchema = v.object({
   title: v.pipe(
@@ -22,27 +25,4 @@ export const askQuestionSchema = v.object({
   ),
 });
 
-async function checkQuestionId(questionId: string): Promise<boolean> {
-  let dbHasQuestion: boolean;
-
-  try {
-    dbHasQuestion = !!(await prisma.question.findUnique({
-      where: {
-        id: questionId,
-      },
-    }));
-  } catch {
-    dbHasQuestion = false;
-  }
-
-  return dbHasQuestion;
-}
-
-export const editQuestionSchema = v.objectAsync({
-  ...askQuestionSchema.entries,
-  questionId: v.pipeAsync(
-    v.string(),
-    v.nonEmpty('Question ID is required'),
-    v.checkAsync(checkQuestionId, 'Question does not exist'),
-  ),
-});
+export const editQuestionSchema = askQuestionSchema;

@@ -1,6 +1,7 @@
+import type { User } from '@/generated/prisma/client';
 import { askQuestionSchema } from '~~/shared/utils/validations/schemas/question';
 import { prisma } from '~~/lib/prisma';
-import type { User } from '@/generated/prisma/client';
+import { validateRequestBody } from '~~/server/utils/sync/validate-request-body';
 
 export default defineEventHandler(async (event) => {
   const { title, content, tags } = await validateRequestBody(
