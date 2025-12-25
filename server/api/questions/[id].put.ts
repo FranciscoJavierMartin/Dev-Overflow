@@ -99,7 +99,7 @@ export default defineEventHandler(async (event) => {
         title,
         content,
         tags: {
-          connect: tagsInDb,
+          set: tagsInDb,
         },
       },
     });
