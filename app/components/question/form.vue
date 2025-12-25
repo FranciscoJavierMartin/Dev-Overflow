@@ -91,7 +91,7 @@ const form = useForm({
         },
       );
 
-      router.push({ name: ROUTES.question, params: { id: question.id } });
+      router.push({ name: ROUTES.questions, params: { id: question.id } });
     } catch {
       showErrorToast('Failed to ask a question. Please try again later');
     }

@@ -9,7 +9,7 @@
         >
           {{ getTimeStamp(createdAt) }}
         </span>
-        <NuxtLink :to="{ name: ROUTES.question, params: { id: id } }">
+        <NuxtLink :to="{ name: ROUTES.questions, params: { id: id } }">
           <h3
             class="sm:h3-semibold base-semibold text-dark-200 dark:text-light-900 line-clamp-1 flex-1"
           >
