@@ -16,7 +16,8 @@ export default defineEventHandler(async (event) => {
   if (
     AUTHENTICATED_ENDPOINTS.some(
       (endpoint) =>
-        endpoint.path === event.path && endpoint.method === event.method,
+        event.path.startsWith(endpoint.path) &&
+        endpoint.method === event.method,
     )
   ) {
     const session = await auth.api.getSession({
