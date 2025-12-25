@@ -1,11 +1,10 @@
 import type { H3Event } from 'h3';
 import * as v from 'valibot';
 
-export async function validateRequestBody<T extends v.GenericSchema>(
-  event: H3Event,
-  schema: T,
-): Promise<v.InferInput<T>> {
-  const { data, error } = await readValidatedBody(event, v.parser(schema));
+export async function validateRequestBody<
+  T extends v.GenericSchema | v.GenericSchemaAsync,
+>(event: H3Event, schema: T): Promise<v.InferInput<T>> {
+  const { data, error } = await readValidatedBody(event, v.parserAsync(schema));
 
   if (error) {
     const errors: Record<string, string> = {};

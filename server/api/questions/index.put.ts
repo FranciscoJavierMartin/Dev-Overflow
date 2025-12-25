@@ -2,6 +2,7 @@ import type { Question, Tag, User } from '@/generated/prisma/client';
 import { editQuestionSchema } from '~~/shared/utils/validations/schemas/question';
 import { prisma } from '~~/lib/prisma';
 
+// TODO: Convert all tags to lowercase
 export default defineEventHandler(async (event) => {
   const { title, content, tags, questionId } = await validateRequestBody(
     event,
@@ -26,13 +27,15 @@ export default defineEventHandler(async (event) => {
   }
 
   await prisma.$transaction(async (tx) => {
-    const newTags =
+    const tags2Add =
       question.tags?.filter((tag) =>
         tags.some((t) => t.toLowerCase() !== tag.name.toLowerCase()),
       ) ?? [];
+    const tags2Remove = question.tags?.filter((tag) => tags.includes(tag.name));
 
+    // Add new tags
     const dbTags = await Promise.all(
-      newTags.map((tag) =>
+      tags2Add.map((tag) =>
         tx.tag.upsert({
           where: {
             name: tag.name,
