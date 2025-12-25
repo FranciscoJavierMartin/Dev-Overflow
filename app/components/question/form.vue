@@ -26,7 +26,7 @@
             <LazyQuestionEditor
               :id="field.name"
               :name="field.name"
-              :model-value="field.state.value"
+              :content="field.state.value"
               placeholder="What trouble you?"
               :aria-invalid="isInvalidInput(field)"
               @input="field.handleChange"

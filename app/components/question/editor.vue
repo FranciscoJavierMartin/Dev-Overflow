@@ -23,9 +23,10 @@ import StarterKit from '@tiptap/starter-kit';
 import { useEditor } from '@tiptap/vue-3';
 import { cn } from '@/lib/utils';
 
-defineProps<{
+const { content } = defineProps<{
   id: string;
   name: string;
+  content: string;
   placeholder: string;
 }>();
 
@@ -34,7 +35,7 @@ const emit = defineEmits<{
 }>();
 
 const editor = useEditor({
-  content: '',
+  content,
   extensions: [StarterKit],
   onUpdate({ editor }) {
     emit('input', editor.getHTML());
