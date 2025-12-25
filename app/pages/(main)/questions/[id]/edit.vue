@@ -1,7 +1,6 @@
 <template>
   <div>
-    <!-- <QuestionForm :question edit /> -->
-    <h1>{{ question?.id }}</h1>
+    <QuestionForm :question edit />
   </div>
 </template>
 
@@ -13,9 +12,23 @@ definePageMeta({
 });
 
 const route = useRoute();
+const { user } = useAuth();
 
 const { data: question } = await useFetch<Question & { tags: Tag[] }>(
   `/api/questions/${route.params.id}`,
-  {},
 );
+
+if (!question.value) {
+  throw createError({
+    status: 404,
+    statusText: 'Question not found',
+  });
+}
+
+if (question.value.authorId === user.value?.id) {
+  throw createError({
+    status: 401,
+    statusText: "User is not question's author",
+  });
+}
 </script>
