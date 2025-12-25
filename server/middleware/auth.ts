@@ -6,6 +6,10 @@ const AUTHENTICATED_ENDPOINTS: { path: string; method: HTTPMethod }[] = [
     path: '/api/questions',
     method: 'POST',
   },
+  {
+    path: '/api/questions',
+    method: 'PUT',
+  },
 ];
 
 export default defineEventHandler(async (event) => {
@@ -22,7 +26,7 @@ export default defineEventHandler(async (event) => {
     if (!session) {
       throw createError({
         status: 401,
-        message: 'Unauthorized access',
+        message: 'Unauthenticated access',
       });
     }
 

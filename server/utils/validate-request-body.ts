@@ -1,6 +1,5 @@
 import type { H3Event } from 'h3';
 import * as v from 'valibot';
-import { Errors } from '~~/server/utils/errors';
 
 export async function validateRequestBody<T extends v.GenericSchema>(
   event: H3Event,
