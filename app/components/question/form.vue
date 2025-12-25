@@ -67,14 +67,19 @@ import type { Question } from '@/generated/prisma/client';
 import { askQuestionSchema } from '~~/shared/utils/validations/schemas/question';
 import { ROUTES } from '~/utils/constants/routes';
 
+const { question, edit } = defineProps<{
+  question?: QuestionWithTags;
+  edit?: boolean;
+}>();
+
 const { showErrorToast } = useToast();
 const router = useRouter();
 
 const form = useForm({
   defaultValues: {
-    title: '',
-    content: '',
-    tags: [] as string[],
+    title: question?.title ?? '',
+    content: question?.content ?? '',
+    tags: question?.tags.map(({ name }) => name) ?? [],
   },
   validators: {
     onSubmit: askQuestionSchema,

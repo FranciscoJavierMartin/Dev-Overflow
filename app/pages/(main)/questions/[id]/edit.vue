@@ -5,8 +5,6 @@
 </template>
 
 <script setup lang="ts">
-import type { Question, Tag } from '@/generated/prisma/client';
-
 definePageMeta({
   middleware: ['auth'],
 });
@@ -14,7 +12,7 @@ definePageMeta({
 const route = useRoute();
 const { user } = useAuth();
 
-const { data: question } = await useFetch<Question & { tags: Tag[] }>(
+const { data: question } = await useFetch<QuestionWithTags>(
   `/api/questions/${route.params.id}`,
 );
 
