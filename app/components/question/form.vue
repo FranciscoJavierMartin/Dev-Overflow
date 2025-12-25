@@ -54,7 +54,13 @@
           class="text-light-900 primary-gradient w-fit"
         >
           <Spinner v-if="form.state.isSubmitting" />
-          {{ form.state.isSubmitting ? 'Submitting' : 'Ask a question' }}
+          {{
+            form.state.isSubmitting
+              ? 'Submitting'
+              : edit
+                ? 'Edit question'
+                : 'Ask a question'
+          }}
         </Button>
       </div>
     </FieldGroup>
@@ -64,8 +70,11 @@
 <script setup lang="ts">
 import { useForm } from '@tanstack/vue-form';
 import type { Question } from '@/generated/prisma/client';
-import { askQuestionSchema } from '~~/shared/utils/validations/schemas/question';
-import { ROUTES } from '~/utils/constants/routes';
+import { ROUTES } from '@/utils/constants/routes';
+import {
+  askQuestionSchema,
+  type QuestionSchema,
+} from '~~/shared/utils/validations/schemas/question';
 
 const { question, edit } = defineProps<{
   question?: QuestionWithTags;
@@ -86,20 +95,43 @@ const form = useForm({
   },
   onSubmit: async ({ value }) => {
     try {
-      const { question } = await $fetch<{ question: Question }>(
-        '/api/questions',
-        {
-          method: 'POST',
-          body: {
-            ...value,
-          },
-        },
-      );
+      const response = await (edit && question
+        ? editQuestion(value)
+        : askQuestion(value));
 
-      router.push({ name: ROUTES.questions, params: { id: question.id } });
+      router.push({ name: ROUTES.questions, params: { id: response.id } });
     } catch {
-      showErrorToast('Failed to ask a question. Please try again later');
+      showErrorToast(
+        edit
+          ? 'Failed to edit question. Please try again later'
+          : 'Failed to ask question. Please try again later',
+      );
     }
   },
 });
+
+async function askQuestion(data: QuestionSchema): Promise<Question> {
+  const { question } = await $fetch<{ question: Question }>('/api/questions', {
+    method: 'POST',
+    body: {
+      ...data,
+    },
+  });
+
+  return question;
+}
+
+async function editQuestion(data: QuestionSchema): Promise<Question> {
+  const { question: response } = await $fetch<{ question: Question }>(
+    `/api/questions/${question?.id}`,
+    {
+      method: 'PUT',
+      body: {
+        ...data,
+      },
+    },
+  );
+
+  return response;
+}
 </script>

@@ -27,3 +27,5 @@ export const askQuestionSchema = v.object({
 });
 
 export const editQuestionSchema = askQuestionSchema;
+
+export type QuestionSchema = v.InferInput<typeof askQuestionSchema>;
