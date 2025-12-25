@@ -1,7 +1,8 @@
 import { prisma } from '~~/lib/prisma';
+import { questionIdSchema } from '~~/shared/utils/validations/schemas/question';
 
 export default defineEventHandler(async (event) => {
-  const id = getRouterParam(event, 'id') as string;
+  const { id } = await validateRouterParams(event, questionIdSchema);
 
   const question = await prisma.question.findUnique({
     where: {
