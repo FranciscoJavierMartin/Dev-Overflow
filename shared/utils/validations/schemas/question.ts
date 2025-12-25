@@ -18,6 +18,7 @@ export const askQuestionSchema = v.object({
         v.string(),
         v.nonEmpty('Tag is required'),
         v.maxLength(15, 'Tag cannot exceed 15 characters'),
+        v.transform((tag) => tag.toLowerCase()),
       ),
     ),
     v.minLength(1, 'At least one tag is required'),
