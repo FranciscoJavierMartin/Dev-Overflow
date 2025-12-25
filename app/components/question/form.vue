@@ -81,7 +81,7 @@ const form = useForm({
   },
   onSubmit: async ({ value }) => {
     try {
-      const { question } = await $fetch<{ question: Question | null }>(
+      const { question } = await $fetch<{ question: Question }>(
         '/api/questions',
         {
           method: 'POST',
@@ -91,11 +91,7 @@ const form = useForm({
         },
       );
 
-      if (question) {
-        router.push({ name: ROUTES.question, params: { id: question.id } });
-      } else {
-        showErrorToast('Failed to ask a question. Please try again later');
-      }
+      router.push({ name: ROUTES.question, params: { id: question.id } });
     } catch {
       showErrorToast('Failed to ask a question. Please try again later');
     }

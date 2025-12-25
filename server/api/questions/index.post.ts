@@ -1,7 +1,6 @@
-import type { User } from 'better-auth';
 import { askQuestionSchema } from '~~/shared/utils/validations/schemas/question';
 import { prisma } from '~~/lib/prisma';
-import type { Question } from '@/generated/prisma/client';
+import type { User } from '@/generated/prisma/client';
 import { validateRequestBody } from '~~/server/utils/validate-request-body';
 
 export default defineEventHandler(async (event) => {
@@ -10,9 +9,8 @@ export default defineEventHandler(async (event) => {
     askQuestionSchema,
   );
   const user: User = event.context.user;
-  let question: Question | null = null;
 
-  await prisma.$transaction(async (tx) => {
+  const question = await prisma.$transaction(async (tx) => {
     const dbTags = await Promise.all(
       tags.map((tag) =>
         tx.tag.upsert({
@@ -32,7 +30,7 @@ export default defineEventHandler(async (event) => {
       ),
     );
 
-    question = await tx.question.create({
+    return await tx.question.create({
       data: {
         title,
         content,
