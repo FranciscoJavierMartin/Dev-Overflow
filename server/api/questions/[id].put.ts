@@ -7,7 +7,6 @@ import { prisma } from '~~/lib/prisma';
 import { validateRequestBody } from '~~/server/utils/sync/validate-request-body';
 import { validateRouterParams } from '~~/server/utils/sync/validate-router-params';
 
-// TODO: Convert all tags to lowercase
 export default defineEventHandler(async (event) => {
   const { id } = await validateRouterParams(event, questionIdSchema);
   const { title, content, tags } = await validateRequestBody(
@@ -38,7 +37,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  await prisma.$transaction(async (tx) => {
+  const updatedQuestion = await prisma.$transaction(async (tx) => {
     const tags2Add = tags.filter((tag) =>
       question.tags.some(({ name }) => tag !== name),
     );
@@ -107,6 +106,6 @@ export default defineEventHandler(async (event) => {
   });
 
   return {
-    question,
+    question: updatedQuestion,
   };
 });
