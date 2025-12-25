@@ -1,7 +1,7 @@
 import type { H3Event } from 'h3';
 import * as v from 'valibot';
 
-export async function validateRouterParams<T extends v.GenericSchema>(
+export async function validateRouterParamsAsync<T extends v.GenericSchema>(
   event: H3Event,
   schema: T,
 ): Promise<v.InferInput<T>> {

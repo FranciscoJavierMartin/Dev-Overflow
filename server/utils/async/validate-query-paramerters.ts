@@ -1,10 +1,9 @@
 import type { H3Event } from 'h3';
 import * as v from 'valibot';
 
-export async function validateQueryParameters<T extends v.GenericSchemaAsync>(
-  event: H3Event,
-  schema: T,
-): Promise<v.InferInput<T>> {
+export async function validateQueryParametersAsync<
+  T extends v.GenericSchemaAsync,
+>(event: H3Event, schema: T): Promise<v.InferInput<T>> {
   const query = getQuery(event);
   const { output, issues, success } = await v.safeParserAsync(schema)(query);
 

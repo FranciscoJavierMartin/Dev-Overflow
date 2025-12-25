@@ -1,7 +1,7 @@
 import type { H3Event } from 'h3';
 import * as v from 'valibot';
 
-export async function validateRequestBody<T extends v.GenericSchemaAsync>(
+export async function validateRequestBodyAsync<T extends v.GenericSchemaAsync>(
   event: H3Event,
   schema: T,
 ): Promise<v.InferInput<T>> {

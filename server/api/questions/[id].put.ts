@@ -4,8 +4,6 @@ import {
   questionIdSchema,
 } from '~~/shared/utils/validations/schemas/question';
 import { prisma } from '~~/lib/prisma';
-import { validateRequestBody } from '~~/server/utils/sync/validate-request-body';
-import { validateRouterParams } from '~~/server/utils/sync/validate-router-params';
 
 export default defineEventHandler(async (event) => {
   const { id } = await validateRouterParams(event, questionIdSchema);
