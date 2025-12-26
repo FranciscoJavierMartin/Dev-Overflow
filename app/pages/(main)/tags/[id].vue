@@ -1,5 +1,21 @@
 <template>
-  <h1>Tags</h1>
+  <div>
+    <ListWrapper
+      :data-length="data?.questions.length"
+      :error
+      :is-loading="pending"
+      :is-success="status === 'success'"
+      :empty="EMPTY_QUESTIONS"
+    >
+      <div class="mt-10 flex w-full flex-col gap-6">
+        <CardQuestion
+          v-for="question in data?.questions"
+          :key="question.id"
+          v-bind="question"
+        />
+      </div>
+    </ListWrapper>
+  </div>
 </template>
 
 <script setup lang="ts">

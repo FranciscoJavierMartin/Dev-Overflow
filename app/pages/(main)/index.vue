@@ -27,9 +27,7 @@
           v-for="question in data?.questions"
           :key="question.id"
           v-bind="question"
-        >
-          {{ question.title }}
-        </CardQuestion>
+        />
       </div>
     </ListWrapper>
   </div>
