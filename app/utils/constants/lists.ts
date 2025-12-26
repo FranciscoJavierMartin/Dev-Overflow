@@ -6,6 +6,6 @@ export const EMPTY_QUESTION = {
     'The question board is empty. Maybe it waiting for your questions to get things rolling',
   button: {
     text: 'Ask a Question',
-    href: ROUTES.askQuestion,
+    toName: ROUTES.askQuestion,
   },
 };

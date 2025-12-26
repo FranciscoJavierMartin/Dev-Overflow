@@ -16,7 +16,7 @@
     </section>
     <SearchFilters />
     <ListWrapper
-      :data
+      :data="data?.questions"
       :error
       :is-loading="pending"
       :is-success="status === 'success'"
