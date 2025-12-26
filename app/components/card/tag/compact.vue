@@ -5,14 +5,21 @@
         <i class="text-sm" :class="[iconClass]" />
         <span>{{ name }}</span>
       </div>
+      <Button v-if="showRemove" variant="ghost" class="size-3">
+        <X
+          class="size-3 cursor-pointer object-contain text-black dark:text-white"
+          alt="close"
+        />
+      </Button>
     </Badge>
-    <p class="small-medium text-dark-500 dark:text-light-700">
+    <p v-if="showCount" class="small-medium text-dark-500 dark:text-light-700">
       {{ questions }}
     </p>
   </NuxtLink>
 </template>
 
 <script setup lang="ts">
+import { X } from 'lucide-vue-next';
 import { ROUTES } from '@/utils/constants/routes';
 
 const { name } = defineProps<{
@@ -21,9 +28,8 @@ const { name } = defineProps<{
   questions?: number;
   showCount?: boolean;
   compact?: boolean;
-  remove?: boolean;
+  showRemove?: boolean;
 }>();
 
 const iconClass = computed(() => getDeviconClass(name));
-const iconDescription = computed(() => getTechDescription(name));
 </script>
