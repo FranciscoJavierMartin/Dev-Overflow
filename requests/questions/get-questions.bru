@@ -5,14 +5,15 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/questions?page=2&pageSize=15
+  url: {{baseUrl}}/questions?page=1&pageSize=15&query=library
   body: none
   auth: inherit
 }
 
 params:query {
-  page: 2
+  page: 1
   pageSize: 15
+  query: vue
 }
 
 settings {

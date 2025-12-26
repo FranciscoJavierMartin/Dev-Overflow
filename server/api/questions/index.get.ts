@@ -36,6 +36,8 @@ export default defineEventHandler(async (event) => {
             mode: 'insensitive',
             contains: query,
           },
+        },
+        {
           content: {
             mode: 'insensitive',
             contains: query,
