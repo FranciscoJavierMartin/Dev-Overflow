@@ -34,38 +34,29 @@
 import { ROUTES } from '@/utils/constants/routes';
 
 const route = useRoute();
-const mio = ref<string>('');
+
 const query = computed<string>(() => (route.query.query as string) || '');
 const filter = computed<string>(() => (route.query.filter as string) || '');
-const page = computed<number>(() => +(route.query.page || 1));
+// const page = computed<number>(() => +(route.query.page || 1));
 const pageSize = computed<number>(() => +(route.query.pageSize || 10));
-const page = useRouteQuery('page', '1', { transform: Number }); // or transforming value
-console.log(route.query);
 
-const { data } = await useFetch<{
+const { data } = await useAsyncData<{
   questions: QuestionItem[];
   isNext: boolean;
-}>('/api/questions', {
-  query: {
-    query: mio.value || '',
-    // filter: filter.value,
-    page: page.value,
-    pageSize: pageSize.value,
-  },
-  // server: false,
-  watch: [mio, filter, page, pageSize],
-});
-
-watch(
-  () => route.query.query,
-  async (newValue) => {
-    // await refresh();
-    console.log('Previous', mio.value);
-    mio.value = (newValue as string) ?? '';
-    console.log(newValue);
-  },
+}>(
+  'questions',
+  (_nuxtApp, { signal }) =>
+    $fetch<{
+      questions: QuestionItem[];
+      isNext: boolean;
+    }>('/api/questions', {
+      query: {
+        query: query.value || '',
+      },
+      signal,
+    }),
   {
-    immediate: true,
+    watch: [query],
   },
 );
 </script>
