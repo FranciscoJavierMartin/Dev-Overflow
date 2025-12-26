@@ -15,23 +15,32 @@
       <SearchLocal />
     </section>
     <SearchFilters />
-    <div class="mt-10 flex w-full flex-col gap-6">
-      <div v-for="question in data?.questions" :key="question.id">
-        {{ question.title }}
-      </div>
-      <!-- <CardQuestion
+    <ListWrapper
+      :data
+      :error
+      :is-loading="pending"
+      :is-success="status === 'success'"
+      :empty="EMPTY_QUESTION"
+    >
+      <div class="mt-10 flex w-full flex-col gap-6">
+        <div v-for="question in data?.questions" :key="question.id">
+          {{ question.title }}
+        </div>
+        <!-- <CardQuestion
         v-for="question in filteredQuestions"
         :key="question.id"
         v-bind="question"
-      >
+        >
         {{ question.title }}
       </CardQuestion> -->
-    </div>
+      </div>
+    </ListWrapper>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ROUTES } from '@/utils/constants/routes';
+import { EMPTY_QUESTION } from '@/utils/constants/lists';
 
 const route = useRoute();
 
@@ -40,7 +49,7 @@ const filter = computed<string>(() => (route.query.filter as string) || '');
 const page = computed<number>(() => +(route.query.page || 1));
 const pageSize = computed<number>(() => +(route.query.pageSize || 10));
 
-const { data } = await useAsyncData<{
+const { data, pending, error, status } = await useAsyncData<{
   questions: QuestionItem[];
   isNext: boolean;
 }>(
