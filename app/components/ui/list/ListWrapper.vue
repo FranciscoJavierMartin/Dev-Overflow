@@ -1,11 +1,22 @@
 <template>
   <div>
-    <slot />
+    <ImageSkeleton
+      :title="error?.message || DEFAULT_ERROR.title"
+      :button="DEFAULT_ERROR.button"
+      :message="DEFAULT_ERROR.message"
+      :image-light="lightError"
+      :image-dark="darkError"
+      alt="Error state illustration"
+    />
+    <!-- <slot /> -->
   </div>
 </template>
 
 <script setup lang="ts" generic="T">
 import type { NuxtError } from '#app';
+import { DEFAULT_ERROR } from '@/utils/constants/lists';
+import lightError from '@/assets/images/light-error.png';
+import darkError from '@/assets/images/dark-error.png';
 
 defineProps<{
   isSuccess: boolean;

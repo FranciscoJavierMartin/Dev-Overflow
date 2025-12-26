@@ -9,3 +9,12 @@ export const EMPTY_QUESTION = {
     toName: ROUTES.askQuestion,
   },
 };
+
+export const DEFAULT_ERROR = {
+  title: 'Something Went Wrong',
+  message: 'Even our code can have a bad day. Give it another shot',
+  button: {
+    text: 'Retry Request',
+    toName: ROUTES.home,
+  },
+};
