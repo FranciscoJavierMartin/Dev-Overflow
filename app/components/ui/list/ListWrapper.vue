@@ -1,6 +1,7 @@
 <template>
   <div>
     <ImageSkeleton
+      v-if="!isSuccess"
       :title="error?.message || DEFAULT_ERROR.title"
       :button="DEFAULT_ERROR.button"
       :message="DEFAULT_ERROR.message"
@@ -8,7 +9,14 @@
       :image-dark="darkError"
       alt="Error state illustration"
     />
-    <!-- <slot /> -->
+    <ImageSkeleton
+      v-else-if="data?.length === 0"
+      v-bind="empty"
+      :image-light="lightIllustration"
+      :image-dark="darkIllustration"
+      alt="Error state illustration"
+    />
+    <slot v-else />
   </div>
 </template>
 
@@ -17,6 +25,8 @@ import type { NuxtError } from '#app';
 import { DEFAULT_ERROR } from '@/utils/constants/lists';
 import lightError from '@/assets/images/light-error.png';
 import darkError from '@/assets/images/dark-error.png';
+import lightIllustration from '@/assets/images/light-illustration.png';
+import darkIllustration from '@/assets/images/dark-illustration.png';
 
 defineProps<{
   isSuccess: boolean;
