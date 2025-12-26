@@ -71,11 +71,13 @@ export default defineEventHandler(async (event) => {
     include: {
       tags: {
         select: {
+          id: true,
           name: true,
         },
       },
       author: {
         select: {
+          id: true,
           name: true,
           image: true,
         },

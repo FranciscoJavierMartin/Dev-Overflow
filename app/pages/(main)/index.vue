@@ -23,16 +23,13 @@
       :empty="EMPTY_QUESTION"
     >
       <div class="mt-10 flex w-full flex-col gap-6">
-        <div v-for="question in data?.questions" :key="question.id">
-          {{ question.title }}
-        </div>
-        <!-- <CardQuestion
-        v-for="question in filteredQuestions"
-        :key="question.id"
-        v-bind="question"
+        <CardQuestion
+          v-for="question in data?.questions"
+          :key="question.id"
+          v-bind="question"
         >
-        {{ question.title }}
-      </CardQuestion> -->
+          {{ question.title }}
+        </CardQuestion>
       </div>
     </ListWrapper>
   </div>

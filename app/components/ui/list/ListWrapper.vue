@@ -30,7 +30,6 @@ import darkIllustration from '@/assets/images/dark-illustration.png';
 
 defineProps<{
   isSuccess: boolean;
-  isLoading: boolean;
   data?: T[];
   error?: NuxtError;
   empty: {
