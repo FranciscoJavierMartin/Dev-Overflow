@@ -7,8 +7,6 @@ export default defineEventHandler(async (event) => {
     paginatedSearchParamsSchema,
   );
 
-  console.log(typeof page);
-
   return {
     page,
     pageSize,
