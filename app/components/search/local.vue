@@ -2,7 +2,7 @@
   <InputGroup>
     <InputGroupInput
       v-model="searchQuery"
-      placeholder="Search..."
+      :placeholder
       class="paragraph-regular placeholder text-dark-400 dark:text-light-700 shadow-none"
     />
     <InputGroupAddon>
@@ -14,7 +14,11 @@
 <script setup lang="ts">
 import { watchDebounced } from '@vueuse/core';
 import { Search } from 'lucide-vue-next';
-import { ROUTES } from '@/utils/constants/routes';
+
+const { routeName, placeholder = 'Search...' } = defineProps<{
+  routeName: string;
+  placeholder?: string;
+}>();
 
 const route = useRoute();
 const router = useRouter();
@@ -28,13 +32,13 @@ watchDebounced(
 
     if (newSearchQuery) {
       router.replace({
-        name: ROUTES.home,
+        name: routeName,
         query: { ...queryParams, query: searchQuery.value },
         force: true,
       });
     } else {
       delete queryParams.query;
-      router.replace({ name: ROUTES.home, query: queryParams, force: true });
+      router.replace({ name: routeName, query: queryParams, force: true });
     }
   },
   { debounce: 300 },

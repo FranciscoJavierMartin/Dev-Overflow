@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded-[10px] p-9 sm:px-11">
+  <article class="rounded-[10px] p-9 sm:px-11">
     <div
       class="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row"
     >
@@ -59,7 +59,7 @@
         />
       </div>
     </div>
-  </div>
+  </article>
 </template>
 
 <script setup lang="ts">
