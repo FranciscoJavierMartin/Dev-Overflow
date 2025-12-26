@@ -59,7 +59,7 @@ const { data } = await useAsyncData<{
       signal,
     }),
   {
-    watch: [query],
+    watch: [query, filter, page, pageSize],
   },
 );
 </script>
