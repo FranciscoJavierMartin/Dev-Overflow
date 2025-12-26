@@ -27,4 +27,5 @@ const { name } = defineProps<{
 }>();
 
 const iconClass = computed(() => getDeviconClass(name));
+const iconDescription = computed(() => getTechDescription(name));
 </script>

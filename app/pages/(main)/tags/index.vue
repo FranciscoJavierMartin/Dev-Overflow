@@ -12,7 +12,7 @@
       :empty="EMPTY_TAGS"
     >
       <div class="mt-10 flex w-full flex-wrap gap-4">
-        <CardTag v-for="tag in data?.tags" :key="tag.id" v-bind="tag" compact />
+        <CardTag v-for="tag in data?.tags" :key="tag.id" v-bind="tag" />
       </div>
     </ListWrapper>
   </div>
