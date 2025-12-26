@@ -16,11 +16,11 @@
     </section>
     <SearchFilters />
     <ListWrapper
-      :data="data?.questions"
+      :data-length="data?.questions.length"
       :error
       :is-loading="pending"
       :is-success="status === 'success'"
-      :empty="EMPTY_QUESTION"
+      :empty="EMPTY_QUESTIONS"
     >
       <div class="mt-10 flex w-full flex-col gap-6">
         <CardQuestion
@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 import { ROUTES } from '@/utils/constants/routes';
-import { EMPTY_QUESTION } from '@/utils/constants/lists';
+import { EMPTY_QUESTIONS } from '@/utils/constants/lists';
 
 const route = useRoute();
 

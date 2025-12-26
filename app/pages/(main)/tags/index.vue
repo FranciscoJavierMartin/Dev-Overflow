@@ -4,12 +4,24 @@
     <section class="mt-11">
       <SearchLocal :route-name="ROUTES.tag" />
     </section>
+    <ListWrapper
+      :data-length="data?.tags.length"
+      :error
+      :is-loading="pending"
+      :is-success="status === 'success'"
+      :empty="EMPTY_TAGS"
+    >
+      <div class="mt-10 flex w-full flex-wrap gap-4">
+        <CardTag v-for="tag in data?.tags" :key="tag.id" v-bind="tag" compact />
+      </div>
+    </ListWrapper>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { Tag } from '@/generated/prisma/client';
 import { ROUTES } from '@/utils/constants/routes';
+import { EMPTY_TAGS } from '@/utils/constants/lists';
 
 const route = useRoute();
 
@@ -19,13 +31,13 @@ const page = computed<number>(() => +(route.query.page || 1));
 const pageSize = computed<number>(() => +(route.query.pageSize || 10));
 
 const { data, pending, error, status } = await useAsyncData<{
-  questions: Tag[];
+  tags: Tag[];
   isNext: boolean;
 }>(
   'tags',
   (_nuxtApp, { signal }) =>
     $fetch<{
-      questions: Tag[];
+      tags: Tag[];
       isNext: boolean;
     }>('/api/tags', {
       query: {

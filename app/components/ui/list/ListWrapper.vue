@@ -10,7 +10,7 @@
       alt="Error state illustration"
     />
     <ImageSkeleton
-      v-else-if="data?.length === 0"
+      v-else-if="dataLength === 0"
       v-bind="empty"
       :image-light="lightIllustration"
       :image-dark="darkIllustration"
@@ -28,9 +28,9 @@ import darkError from '@/assets/images/dark-error.png';
 import lightIllustration from '@/assets/images/light-illustration.png';
 import darkIllustration from '@/assets/images/dark-illustration.png';
 
-defineProps<{
+const { dataLength = 0 } = defineProps<{
   isSuccess: boolean;
-  data?: T[];
+  dataLength?: number;
   error?: NuxtError;
   empty: {
     title: string;
