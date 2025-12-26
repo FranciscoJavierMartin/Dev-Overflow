@@ -1,11 +1,17 @@
 <template>
   <NuxtLink :to="to" class="flex-center gap-1">
     <NuxtImg
+      v-if="imgUrl"
       :src="imgUrl"
       width="16"
       height="16"
       :alt
       class="rounded-full object-contain"
+      :placeholder="[16, 16]"
+    />
+    <User
+      v-else
+      class="text-dark-400 dark:text-light-700 border-dark-400 dark:border-light-700 size-4 rounded-2xl border"
     />
     <p class="flex items-center gap-1" :class="textClass">
       {{ value }}
@@ -22,6 +28,7 @@ import type {
   RouteLocationAsPathGeneric,
   RouteLocationAsRelativeGeneric,
 } from 'vue-router';
+import { User } from 'lucide-vue-next';
 
 defineProps<{
   imgUrl: string;

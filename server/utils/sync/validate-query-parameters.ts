@@ -6,21 +6,24 @@ export async function validateQueryParameters<T extends v.GenericSchema>(
   schema: T,
 ): Promise<v.InferInput<T>> {
   const query = getQuery(event);
-  const { data, error } = v.safeParse(schema, query);
+  const { output, issues, success } = v.safeParse(schema, query);
 
-  if (error) {
+  if (!success) {
     const errors: Record<string, string> = {};
 
-    for (const issue of error.issues) {
-      const field = issue.path.join('.');
+    for (const issue of issues) {
+      const field = issue.path?.join('.');
 
       if (field && !errors[field]) {
         errors[field] = issue.message;
       }
     }
 
-    throw Errors.validation('Invalid query parameters', { error, errors });
+    throw Errors.validation('Invalid query parameters', {
+      error: issues,
+      errors,
+    });
   }
 
-  return data;
+  return output;
 }

@@ -28,4 +28,34 @@ export const askQuestionSchema = v.object({
 
 export const editQuestionSchema = askQuestionSchema;
 
+export const paginatedSearchParamsSchema = v.object({
+  page: v.optional(
+    v.pipe(
+      v.union([v.string(), v.number()]),
+      v.toNumber(),
+      v.number(),
+      v.integer(),
+      v.minValue(1),
+    ),
+    1,
+  ),
+  pageSize: v.optional(
+    v.pipe(
+      v.union([v.string(), v.number()]),
+      v.toNumber(),
+      v.number(),
+      v.integer(),
+      v.minValue(1),
+    ),
+    10,
+  ),
+  query: v.optional(v.pipe(v.string())),
+  filter: v.optional(v.pipe(v.string())),
+  sort: v.optional(v.pipe(v.string())),
+});
+
 export type QuestionSchema = v.InferInput<typeof askQuestionSchema>;
+export type PaginatedSearchParams = Omit<
+  v.InferInput<typeof paginatedSearchParamsSchema>,
+  'page' | 'pageSize'
+> & { page: number; pageSize: number };

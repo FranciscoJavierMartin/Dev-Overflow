@@ -24,6 +24,7 @@
         :id="tag.id"
         :key="tag.id"
         :name="tag.name"
+        compact
       />
     </div>
     <div class="flex-between mt-6 w-full flex-wrap gap-3">

@@ -15,75 +15,57 @@
       <SearchLocal />
     </section>
     <SearchFilters />
-    <div class="mt-10 flex w-full flex-col gap-6">
-      <CardQuestion
-        v-for="question in filteredQuestions"
-        :key="question.id"
-        v-bind="question"
-      >
-        {{ question.title }}
-      </CardQuestion>
-    </div>
+    <ListWrapper
+      :data="data?.questions"
+      :error
+      :is-loading="pending"
+      :is-success="status === 'success'"
+      :empty="EMPTY_QUESTION"
+    >
+      <div class="mt-10 flex w-full flex-col gap-6">
+        <CardQuestion
+          v-for="question in data?.questions"
+          :key="question.id"
+          v-bind="question"
+        >
+          {{ question.title }}
+        </CardQuestion>
+      </div>
+    </ListWrapper>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ROUTES } from '@/utils/constants/routes';
+import { EMPTY_QUESTION } from '@/utils/constants/lists';
 
 const route = useRoute();
 
-const questions = [
+const query = computed<string>(() => (route.query.query as string) || '');
+const filter = computed<string>(() => (route.query.filter as string) || '');
+const page = computed<number>(() => +(route.query.page || 1));
+const pageSize = computed<number>(() => +(route.query.pageSize || 10));
+
+const { data, pending, error, status } = await useAsyncData<{
+  questions: QuestionItem[];
+  isNext: boolean;
+}>(
+  'questions',
+  (_nuxtApp, { signal }) =>
+    $fetch<{
+      questions: QuestionItem[];
+      isNext: boolean;
+    }>('/api/questions', {
+      query: {
+        query: query.value,
+        filter: filter.value,
+        page: page.value,
+        pageSize: pageSize.value,
+      },
+      signal,
+    }),
   {
-    id: '1',
-    title: 'How to learn React?',
-    description: 'I want to learn React, can anyone help me?',
-    tags: [
-      { id: '1', name: 'React' },
-      { id: '2', name: 'JavaScript' },
-    ],
-    author: {
-      id: '1',
-      name: 'John Doe',
-      image:
-        'https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg',
-    },
-    upvotes: 10,
-    answers: 5,
-    views: 100,
-    createdAt: new Date(),
+    watch: [query, filter, page, pageSize],
   },
-  {
-    id: '2',
-    title: 'How to learn JavaScript?',
-    description: 'I want to learn JavaScript, can anyone help me?',
-    tags: [{ id: '1', name: 'JavaScript' }],
-    author: {
-      id: '1',
-      name: 'John Doe',
-      image:
-        'https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg',
-    },
-    upvotes: 10,
-    answers: 5,
-    views: 100,
-    createdAt: new Date(),
-  },
-];
-
-const query = computed(() => (route.query.query as string) ?? '');
-const filter = computed(() => (route.query.filter as string) ?? '');
-
-const filteredQuestions = computed(() => {
-  const filterLowerCase = filter.value.toLowerCase();
-  return questions.filter((question) => {
-    const matchesQuery = question.title
-      .toLowerCase()
-      .includes(query.value.toLowerCase());
-    const matchesFilter = filter.value
-      ? question.tags.some((tag) => tag.name.toLowerCase() === filterLowerCase)
-      : true;
-
-    return matchesQuery && matchesFilter;
-  });
-});
+);
 </script>
