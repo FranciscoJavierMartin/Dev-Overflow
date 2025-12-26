@@ -1,5 +1,15 @@
 <template>
   <div>
+    <section
+      class="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center"
+    >
+      <h1 class="h1-bold text-dark-100 dark:text-light-900 capitalize">
+        {{ data?.tag.name }}
+      </h1>
+    </section>
+    <section class="mt-11">
+      <SearchLocal :route-name="ROUTES.tag" />
+    </section>
     <ListWrapper
       :data-length="data?.questions.length"
       :error
