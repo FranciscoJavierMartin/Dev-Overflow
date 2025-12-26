@@ -37,7 +37,7 @@ const route = useRoute();
 
 const query = computed<string>(() => (route.query.query as string) || '');
 const filter = computed<string>(() => (route.query.filter as string) || '');
-// const page = computed<number>(() => +(route.query.page || 1));
+const page = computed<number>(() => +(route.query.page || 1));
 const pageSize = computed<number>(() => +(route.query.pageSize || 10));
 
 const { data } = await useAsyncData<{
@@ -51,7 +51,10 @@ const { data } = await useAsyncData<{
       isNext: boolean;
     }>('/api/questions', {
       query: {
-        query: query.value || '',
+        query: query.value,
+        filter: filter.value,
+        page: page.value,
+        pageSize: pageSize.value,
       },
       signal,
     }),
