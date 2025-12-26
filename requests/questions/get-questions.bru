@@ -1,0 +1,21 @@
+meta {
+  name: Get questions
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/questions?page=2&pageSize=15
+  body: none
+  auth: inherit
+}
+
+params:query {
+  page: 2
+  pageSize: 15
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
