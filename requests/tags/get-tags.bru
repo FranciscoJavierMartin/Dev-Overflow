@@ -1,0 +1,21 @@
+meta {
+  name: Get tags
+  type: http
+}
+
+get {
+  url: {{baseUrl}}/tags?page=1&pageSize=15&query=library
+  body: none
+  auth: inherit
+}
+
+params:query {
+  page: 1
+  pageSize: 15
+  query: vue
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

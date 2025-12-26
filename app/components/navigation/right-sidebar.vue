@@ -20,12 +20,11 @@
       <section class="mt-16">
         <h3 class="h3-bold text-dark-200 dark:text-light-900">Popular tags</h3>
         <div class="mt-7 flex flex-col gap-4">
-          <CardTag
+          <CardTagCompact
             v-for="tag in popularTags"
             :key="tag.id"
             v-bind="tag"
             show-count
-            compact
           />
         </div>
       </section>

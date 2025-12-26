@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded-[10px] p-9 sm:px-11">
+  <article class="rounded-[10px] p-9 sm:px-11">
     <div
       class="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row"
     >
@@ -19,12 +19,11 @@
       </div>
     </div>
     <div class="mt-3.5 flex w-full flex-wrap gap-2">
-      <CardTag
+      <CardTagCompact
         v-for="tag in tags"
         :id="tag.id"
         :key="tag.id"
         :name="tag.name"
-        compact
       />
     </div>
     <div class="flex-between mt-6 w-full flex-wrap gap-3">
@@ -59,7 +58,7 @@
         />
       </div>
     </div>
-  </div>
+  </article>
 </template>
 
 <script setup lang="ts">

@@ -1,0 +1,67 @@
+import type {
+  TagWhereInput,
+  TagOrderByWithRelationInput,
+} from '@/generated/prisma/models';
+import { prisma } from '~~/lib/prisma';
+import { paginatedSearchParamsSchema } from '~~/shared/utils/validations/schemas/question';
+
+export default defineEventHandler(async (event) => {
+  const {
+    page: pageParam = 1,
+    pageSize: pageSizeParam = 10,
+    query,
+    sort,
+  } = await validateQueryParameters(event, paginatedSearchParamsSchema);
+
+  const page = parseInt(pageParam.toString());
+  const pageSize = parseInt(pageSizeParam.toString());
+  const skip = (page - 1) * pageSize;
+  const take = pageSize;
+  let filterQuery: TagWhereInput = {};
+  const orderBy: TagOrderByWithRelationInput = {};
+
+  if (query) {
+    filterQuery = {
+      name: {
+        contains: query,
+        mode: 'insensitive',
+      },
+    };
+  }
+
+  switch (sort) {
+    case 'popular':
+      orderBy.questions = 'desc';
+      break;
+    case 'recent':
+      orderBy.createdAt = 'desc';
+      break;
+    case 'oldest':
+      orderBy.createdAt = 'asc';
+      break;
+    case 'name':
+      orderBy.name = 'asc';
+      break;
+    default:
+      orderBy.questions = 'desc';
+      break;
+  }
+
+  const tags = await prisma.tag.findMany({
+    where: filterQuery,
+    orderBy,
+    skip,
+    take,
+  });
+
+  const totalTags = await prisma.tag.count({
+    where: filterQuery,
+  });
+
+  const isNext: boolean = totalTags > skip + tags.length;
+
+  return {
+    tags,
+    isNext,
+  };
+});
