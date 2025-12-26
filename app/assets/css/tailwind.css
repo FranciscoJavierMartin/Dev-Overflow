@@ -195,6 +195,10 @@
     @apply text-xs leading-[15.6px] font-medium;
   }
 
+  .small-regular {
+    @apply text-xs leading-[15.6px] font-normal;
+  }
+
   /* Hide scrollbar for IE, Edge and Firefox */
   .no-scrollbar {
     -ms-overflow-style: none; /* IE and Edge */
@@ -262,6 +266,10 @@
 
   .body-medium {
     @apply text-sm leading-[18.2px] font-medium;
+  }
+
+  .body-semibold {
+    @apply text-sm leading-[18.2px] font-semibold;
   }
 
   .body-regular {

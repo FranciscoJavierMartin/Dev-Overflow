@@ -27,14 +27,12 @@
 </template>
 
 <script setup lang="ts">
-import { ROUTES } from '~/utils/constants/routes';
+import { ROUTES } from '@/utils/constants/routes';
 
 const { name } = defineProps<{
   id: string;
   name: string;
   questions?: number;
-  showCount?: boolean;
-  compact?: boolean;
 }>();
 
 const iconClass = computed(() => getDeviconClass(name));

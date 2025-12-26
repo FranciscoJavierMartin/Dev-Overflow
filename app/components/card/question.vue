@@ -19,12 +19,11 @@
       </div>
     </div>
     <div class="mt-3.5 flex w-full flex-wrap gap-2">
-      <CardTag
+      <CardTagCompact
         v-for="tag in tags"
         :id="tag.id"
         :key="tag.id"
         :name="tag.name"
-        compact
       />
     </div>
     <div class="flex-between mt-6 w-full flex-wrap gap-3">
