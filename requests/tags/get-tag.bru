@@ -1,11 +1,11 @@
 meta {
-  name: Get tags
+  name: Get tag
   type: http
-  seq: 1
+  seq: 2
 }
 
 get {
-  url: {{baseUrl}}/tags?page=1&pageSize=15&query=te
+  url: {{baseUrl}}/tags/:id?page=1&pageSize=15&query=te
   body: none
   auth: inherit
 }
@@ -16,8 +16,8 @@ params:query {
   query: te
 }
 
-vars:post-response {
-  tagId: res.body.tags[0].id
+params:path {
+  id: {{tagId}}
 }
 
 settings {
