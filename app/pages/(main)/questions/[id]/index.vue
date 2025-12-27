@@ -45,7 +45,7 @@
         text-class="small-medium text-dark-400 dark:text-light-700"
       />
     </div>
-    <QuestionPreview />
+    <LazyQuestionPreview hydrate-on-visible />
     <div v-if="data" class="mt-8 flex flex-wrap gap-2">
       <CardTagCompact v-for="tag in data?.tags" :key="tag.id" v-bind="tag" />
     </div>

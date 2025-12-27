@@ -72,8 +72,6 @@ const content = `### Question
     `;
 
 const markdown2HTML = computedAsync<string>(() =>
-  marked.parse(
-    DOMPurify.sanitize(content.replace(/\\/g, '').replace(/&#x20;/g, '')),
-  ),
+  marked.parse(DOMPurify.sanitize(content)),
 );
 </script>
