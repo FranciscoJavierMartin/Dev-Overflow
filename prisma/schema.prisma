@@ -27,6 +27,7 @@ model User {
   sessions  Session[]
   accounts  Account[]
   questions Question[]
+  answers   Answer[]
 }
 
 model Session {
@@ -90,7 +91,8 @@ model Question {
   author   User   @relation(fields: [authorId], references: [id])
   authorId String
 
-  tags Tag[]
+  tags             Tag[]
+  answersAsociated Answer[]
 }
 
 model Tag {
@@ -102,4 +104,19 @@ model Tag {
   updatedAt DateTime @updatedAt
 
   questionAsociated Question[]
+}
+
+model Answer {
+  id        String @id @default(cuid())
+  content   String
+  upvotes   Int    @default(0)
+  downvotes Int    @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  author     User     @relation(fields: [authorId], references: [id])
+  authorId   String
+  question   Question @relation(fields: [questionId], references: [id])
+  questionId String
 }

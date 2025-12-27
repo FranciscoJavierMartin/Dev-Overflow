@@ -7,7 +7,7 @@
     <div
       v-if="isEditorReady"
       ref="editorElement"
-      class="prose prose-sm sm:prose lg:prose-lg xl:prose-xl dark:prose-invert h-full w-full max-w-none px-4 py-6 focus:outline-none"
+      class="prose prose-sm prose-lg:text-base prose-p:text-base prose-sm:text-base prose-p:my-0 prose-ul:my-0 prose-ol:my-0 prose-code:my-0 prose-strong:my-0 prose-h1:my-0 prose-h2:my-0 prose-h3:my-0 prose-it sm:prose lg:prose-lg xl:prose-xl dark:prose-invert h-full w-full max-w-none px-4 py-6 text-base focus:outline-none"
       role="region"
     />
 
