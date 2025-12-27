@@ -10,6 +10,10 @@ const AUTHENTICATED_ENDPOINTS: { path: string; method: HTTPMethod }[] = [
     path: '/api/questions',
     method: 'PUT',
   },
+  {
+    path: '/api/answers',
+    method: 'POST',
+  },
 ];
 
 export default defineEventHandler(async (event) => {
