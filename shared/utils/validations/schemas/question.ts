@@ -28,6 +28,10 @@ export const askQuestionSchema = v.object({
 
 export const editQuestionSchema = askQuestionSchema;
 
+export const answerQuestionSchema = v.object({
+  content: v.pipe(v.string(), v.nonEmpty('Content is required')),
+});
+
 export const paginatedSearchParamsSchema = v.object({
   page: v.optional(
     v.pipe(

@@ -49,6 +49,9 @@
     <div v-if="data" class="mt-8 flex flex-wrap gap-2">
       <CardTagCompact v-for="tag in data?.tags" :key="tag.id" v-bind="tag" />
     </div>
+    <section class="my-5">
+      <QuestionFormAnswer />
+    </section>
   </div>
 </template>
 
