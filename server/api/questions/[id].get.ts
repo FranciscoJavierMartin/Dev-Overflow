@@ -10,6 +10,13 @@ export default defineEventHandler(async (event) => {
     },
     include: {
       tags: true,
+      author: {
+        select: {
+          id: true,
+          name: true,
+          image: true,
+        },
+      },
     },
   });
 

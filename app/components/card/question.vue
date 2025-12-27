@@ -52,7 +52,7 @@
         />
         <CardMetricInfo
           :icon="Eye"
-          :value="views"
+          :value="formatNumber(views)"
           title="Views"
           text-class="small-medium text-dark-400 dark:text-light-800"
         />
