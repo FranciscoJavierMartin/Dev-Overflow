@@ -1,6 +1,6 @@
 <template>
-  <section class="grid wrap-break-word">
-    <div v-html="sanitizedText" />
+  <section class="markdown prose grid wrap-break-word">
+    <div v-html="markdown2HTML" />
   </section>
 </template>
 
@@ -71,7 +71,9 @@ const content = `### Question
   **Tags:** React, Performance, State Management
     `;
 
-const sanitizedText = computedAsync<string>(() =>
-  marked.parse(DOMPurify.sanitize(content)),
+const markdown2HTML = computedAsync<string>(() =>
+  marked.parse(
+    DOMPurify.sanitize(content.replace(/\\/g, '').replace(/&#x20;/g, '')),
+  ),
 );
 </script>
