@@ -60,7 +60,7 @@ const route = useRoute();
 
 const id = computed(() => route.params.id);
 
-const { data, pending, error, status } = await useAsyncData<QuestionItem>(
+const { data } = await useAsyncData<QuestionItem>(
   `question-${id.value}`,
   (_nuxtApp, { signal }) =>
     $fetch<QuestionItem>(`/api/questions/${id.value}`, {
