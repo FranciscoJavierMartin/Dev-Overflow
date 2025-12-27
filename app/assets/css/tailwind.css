@@ -232,6 +232,10 @@
     @apply text-2xl leading-[31.2px] font-bold;
   }
 
+  .h2-semibold {
+    @apply text-2xl leading-[31.2px] font-semibold;
+  }
+
   .h3-bold {
     @apply text-xl leading-[26px] font-bold;
   }

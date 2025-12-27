@@ -1,4 +1,4 @@
-export function getTimeStamp(createdAt: Date): string {
+export function getTimeStamp(createdAt: Date | string): string {
   const date = new Date(createdAt);
   const now = new Date();
   const secondsAgo = Math.floor((now.getTime() - date.getTime()) / 1000);
