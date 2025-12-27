@@ -29,7 +29,11 @@ export const askQuestionSchema = v.object({
 export const editQuestionSchema = askQuestionSchema;
 
 export const answerQuestionSchema = v.object({
-  content: v.pipe(v.string(), v.nonEmpty('Content is required')),
+  content: v.pipe(
+    v.string(),
+    v.nonEmpty('Content is required'),
+    v.minLength(20, 'Answer has to have more then 20 characters'),
+  ),
 });
 
 export const paginatedSearchParamsSchema = v.object({
