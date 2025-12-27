@@ -50,7 +50,10 @@
 
 <script setup lang="ts">
 import { useForm } from '@tanstack/vue-form';
+import type { Answer } from '~/generated/prisma/client';
 import { answerQuestionSchema } from '~~/shared/utils/validations/schemas/question';
+
+const { questionId } = defineProps<{ questionId: string }>();
 
 const { showErrorToast } = useToast();
 
@@ -61,10 +64,19 @@ const form = useForm({
   validators: {
     onSubmit: answerQuestionSchema,
   },
-  onSubmit: async ({ value }) => {
+  onSubmit: async ({ value, formApi }) => {
     try {
-      console.log(value);
-    } catch {
+      await $fetch<Answer>('/api/answers', {
+        method: 'POST',
+        body: {
+          questionId: questionId,
+          content: value.content,
+        },
+      });
+
+      formApi.reset();
+    } catch (error) {
+      console.log(error);
       showErrorToast('Failed to answer question. Please try again later');
     }
   },

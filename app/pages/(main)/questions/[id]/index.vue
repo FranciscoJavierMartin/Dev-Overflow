@@ -49,8 +49,8 @@
     <div v-if="data" class="mt-8 flex flex-wrap gap-2">
       <CardTagCompact v-for="tag in data?.tags" :key="tag.id" v-bind="tag" />
     </div>
-    <section class="my-5">
-      <QuestionFormAnswer />
+    <section v-if="user" class="my-5">
+      <QuestionFormAnswer :question-id="id" />
     </section>
   </div>
 </template>
@@ -60,8 +60,9 @@ import { ROUTES } from '@/utils/constants/routes';
 import { Eye, MessageCircle, Clock } from 'lucide-vue-next';
 
 const route = useRoute();
+const { user } = useAuth();
 
-const id = computed(() => route.params.id);
+const id = computed<string>(() => route.params.id as string);
 
 const { data } = await useAsyncData<QuestionItem>(
   `question-${id.value}`,
