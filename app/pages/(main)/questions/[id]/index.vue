@@ -70,4 +70,9 @@ const { data } = await useAsyncData<QuestionItem>(
     watch: [id],
   },
 );
+
+await useLazyFetch(`/api/questions/${id.value}`, {
+  method: 'PATCH',
+  server: false,
+});
 </script>
