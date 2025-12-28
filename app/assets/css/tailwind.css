@@ -218,15 +218,15 @@
   }
 
   .subtitle-regular {
-    @apply text-[10px] leading-[13px] font-normal;
+    @apply text-[10px] leading-3.25 font-normal;
   }
 
   .subtitle-medium {
-    @apply text-[10px] leading-[13px] font-medium;
+    @apply text-[10px] leading-3.25 font-medium;
   }
 
   .h1-bold {
-    @apply text-3xl leading-[42px] font-bold tracking-tighter;
+    @apply text-3xl leading-10.5 font-bold tracking-tighter;
   }
 
   .h2-bold {
@@ -238,7 +238,7 @@
   }
 
   .h3-bold {
-    @apply text-xl leading-[26px] font-bold;
+    @apply text-xl leading-6.5 font-bold;
   }
 
   .h3-semibold {
