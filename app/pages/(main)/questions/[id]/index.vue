@@ -27,6 +27,7 @@
             :upvotes="data.question.upvotes"
             :downvotes="data.question.downvotes"
           />
+          <QuestionSave :question-id="data.question.id" is-saved />
         </div>
       </div>
       <h2 class="h2-semibold text-dark-200 dark:text-light-900 mt-3.5 w-full">
