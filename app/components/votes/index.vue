@@ -51,7 +51,7 @@
 import { ArrowBigDown, ArrowBigUp } from 'lucide-vue-next';
 import { VoteType, type VoteTarget } from '@/generated/prisma/enums';
 
-const { targetId } = defineProps<{
+const { targetId, type } = defineProps<{
   type: VoteTarget;
   targetId: string;
   upvotes: number;
@@ -64,26 +64,32 @@ const { user } = useAuth();
 const { showErrorToast, showSuccessToast } = useToast();
 
 const upvoteButtonDisabled = computed<boolean>(
-  () =>
-    data.value?.hasUpvoted ||
-    data.value?.hasDownvoted ||
-    !user ||
-    isLoading.value,
+  () => data.value?.hasUpvoted || !user || isLoading.value,
 );
 
 const downvoteButtonDisabled = computed<boolean>(
-  () =>
-    data.value?.hasDownvoted ||
-    data.value?.hasUpvoted ||
-    !user ||
-    isLoading.value,
+  () => data.value?.hasDownvoted || !user || isLoading.value,
 );
 
 async function vote(voteType: VoteType): Promise<void> {
   try {
     isLoading.value = true;
-    console.log(voteType);
-    showSuccessToast('An error occured while voting');
+    const { result } = await $fetch<{ result: boolean }>('/api/votes', {
+      method: 'POST',
+      body: {
+        targetId,
+        targetType: type,
+        type: voteType,
+      },
+    });
+
+    if (result) {
+      const successMessage =
+        voteType === 'upvote' ? 'Upvote successfully' : 'Downvote successfully';
+      showSuccessToast(successMessage);
+    } else {
+      showErrorToast('An error occured while voting');
+    }
   } catch {
     showErrorToast('An error occured while voting');
   } finally {

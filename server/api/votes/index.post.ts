@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   );
   const user: User = event.context.user;
 
-  await prisma.$transaction(async (tx) => {
+  const result = await prisma.$transaction(async (tx) => {
     const isUpdate = !!(await tx.vote.findUnique({
       where: {
         targetId_authorId: {
@@ -66,12 +66,11 @@ export default defineEventHandler(async (event) => {
         },
       });
     }
+
+    return true;
   });
 
   return {
-    targetId,
-    targetType,
-    type,
-    user,
+    result,
   };
 });
