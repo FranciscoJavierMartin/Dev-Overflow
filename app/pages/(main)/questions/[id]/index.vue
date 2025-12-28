@@ -48,7 +48,7 @@
         text-class="small-medium text-dark-400 dark:text-light-700"
       />
     </div>
-    <LazyQuestionPreview hydrate-on-visible />
+    <LazyQuestionPreview hydrate-on-visible :content="data?.question.content" />
     <div v-if="data" class="mt-8 flex flex-wrap gap-2">
       <CardTagCompact
         v-for="tag in data.question.tags"
@@ -74,7 +74,6 @@
 <script setup lang="ts">
 import { ROUTES } from '@/utils/constants/routes';
 import { Eye, MessageCircle, Clock } from 'lucide-vue-next';
-import type { Answer } from '~/generated/prisma/client';
 
 const route = useRoute();
 const { user } = useAuth();
@@ -83,7 +82,7 @@ const id = computed<string>(() => route.params.id as string);
 
 const { data, error, pending, status } = await useAsyncData<{
   question: QuestionItem;
-  answers: Answer[];
+  answers: AnswerWithAuthor[];
   totalAnswers: number;
   isNext: boolean;
 }>(
@@ -94,7 +93,7 @@ const { data, error, pending, status } = await useAsyncData<{
         signal,
       }),
       $fetch<{
-        answers: Answer[];
+        answers: AnswerWithAuthor[];
         totalAnswers: number;
         isNext: boolean;
       }>('/api/answers', {

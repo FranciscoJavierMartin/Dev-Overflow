@@ -12,7 +12,14 @@
       :empty="EMPTY_ANSWERS"
     >
       <div class="mt-10 flex w-full flex-col gap-6">
-        <div v-for="answer in answers" :key="answer.id">{{ answer.id }}</div>
+        <CardAnswer
+          v-for="answer in answers"
+          :id="answer.id"
+          :key="answer.id"
+          :author="answer.author"
+          :content="answer.content"
+          :created-at="answer.createdAt"
+        />
       </div>
     </ListWrapper>
   </div>
@@ -20,11 +27,10 @@
 
 <script setup lang="ts">
 import type { AsyncDataRequestStatus, NuxtError } from '#app';
-import type { Answer } from '@/generated/prisma/client';
 import { EMPTY_ANSWERS } from '@/utils/constants/lists';
 
 const { totalAnswers } = defineProps<{
-  answers: Answer[];
+  answers: AnswerWithAuthor[];
   totalAnswers: number;
   pending: boolean;
   status: AsyncDataRequestStatus;
