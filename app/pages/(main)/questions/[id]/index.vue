@@ -57,7 +57,13 @@
       />
     </div>
     <section v-if="data" class="my-5">
-      <QuestionAnswers :answers="data.answers" />
+      <QuestionAnswers
+        :answers="data.answers"
+        :total-answers="data.totalAnswers"
+        :error
+        :pending
+        :status
+      />
     </section>
     <section v-if="user" class="my-5">
       <QuestionFormAnswer :question-id="id" />
@@ -75,7 +81,7 @@ const { user } = useAuth();
 
 const id = computed<string>(() => route.params.id as string);
 
-const { data } = await useAsyncData<{
+const { data, error, pending, status } = await useAsyncData<{
   question: QuestionItem;
   answers: Answer[];
   totalAnswers: number;
