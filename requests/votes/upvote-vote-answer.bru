@@ -1,0 +1,24 @@
+meta {
+  name: Upvote vote answer
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/votes
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "targetId": "{{answerId}}",
+    "targetType": "answer",
+    "type": "upvote"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

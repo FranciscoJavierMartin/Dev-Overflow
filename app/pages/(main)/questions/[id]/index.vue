@@ -22,9 +22,10 @@
         </div>
         <div class="flex justify-end">
           <Votes
+            :type="VoteTarget.question"
+            :target-id="data.question.id"
             :upvotes="data.question.upvotes"
             :downvotes="data.question.downvotes"
-            has-upvoted
           />
         </div>
       </div>
@@ -78,6 +79,7 @@
 <script setup lang="ts">
 import { ROUTES } from '@/utils/constants/routes';
 import { Eye, MessageCircle, Clock } from 'lucide-vue-next';
+import { VoteTarget } from '@/generated/prisma/enums';
 
 const route = useRoute();
 const { user } = useAuth();

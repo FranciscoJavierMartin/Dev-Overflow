@@ -1,0 +1,21 @@
+meta {
+  name: Has user voted
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/votes/has-voted?targetId={{questionId}}
+  body: none
+  auth: inherit
+}
+
+params:query {
+  targetId: {{questionId}}
+  ~targetType: question
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
