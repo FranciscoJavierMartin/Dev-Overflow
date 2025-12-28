@@ -15,6 +15,10 @@ params:query {
   sort: latest
 }
 
+vars:post-response {
+  answerId: res.body.answers[0].id
+}
+
 settings {
   encodeUrl: true
   timeout: 0
