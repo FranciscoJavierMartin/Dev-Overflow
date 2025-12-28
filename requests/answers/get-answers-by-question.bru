@@ -1,0 +1,21 @@
+meta {
+  name: Get answers by question
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/answers?questionId={{questionId}}&sort=latest
+  body: none
+  auth: inherit
+}
+
+params:query {
+  questionId: {{questionId}}
+  sort: latest
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

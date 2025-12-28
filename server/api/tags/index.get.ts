@@ -12,11 +12,10 @@ export default defineEventHandler(async (event) => {
     query,
     sort,
   } = await validateQueryParameters(event, paginatedSearchParamsSchema);
-
-  const page = parseInt(pageParam.toString());
-  const pageSize = parseInt(pageSizeParam.toString());
-  const skip = (page - 1) * pageSize;
-  const take = pageSize;
+  const { skip, take } = calculatePageData({
+    pageParam,
+    pageSizeParam,
+  });
   let filterQuery: TagWhereInput = {};
   const orderBy: TagOrderByWithRelationInput = {};
 

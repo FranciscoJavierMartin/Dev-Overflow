@@ -19,6 +19,11 @@ export const EMPTY_TAGS = {
   },
 };
 
+export const EMPTY_ANSWERS = {
+  title: 'No Answer Found',
+  message: 'The Answer could is empty. Add some keyword to make it rain',
+};
+
 export const DEFAULT_ERROR = {
   title: 'Something Went Wrong',
   message: 'Even our code can have a bad day. Give it another shot',

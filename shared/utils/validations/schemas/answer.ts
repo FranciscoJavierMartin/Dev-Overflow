@@ -1,7 +1,15 @@
 import * as v from 'valibot';
-import { answerQuestionSchema } from '~~/shared/utils/validations/schemas/question';
+import {
+  answerQuestionSchema,
+  paginatedSearchParamsSchema,
+} from '~~/shared/utils/validations/schemas/question';
 
 export const answerSchema = v.object({
-  questionId: v.pipe(v.string(), v.nonEmpty(), v.cuid2()),
   ...answerQuestionSchema.entries,
+  questionId: v.pipe(v.string(), v.nonEmpty(), v.cuid2()),
+});
+
+export const paginatedAnswersSchema = v.object({
+  ...paginatedSearchParamsSchema.entries,
+  questionId: v.pipe(v.string(), v.nonEmpty(), v.cuid2()),
 });
