@@ -6,7 +6,7 @@
         size="icon"
         :disabled="upvoteButtonDisabled"
         class="group"
-        @click="vote('upvote')"
+        @click="vote(VoteType.upvote)"
       >
         <ArrowBigUp
           class="size-4.5 group-hover:fill-green-500 group-hover:text-green-500"
@@ -28,7 +28,7 @@
         size="icon"
         class="group"
         :disabled="downvoteButtonDisabled"
-        @click="vote('downvote')"
+        @click="vote(VoteType.downvote)"
       >
         <ArrowBigDown
           class="group-hover:text-destructive group-hover:fill-destructive size-4.5"
@@ -70,9 +70,10 @@ const downvoteButtonDisabled = computed<boolean>(
   () => hasDownvoted || hasUpvoted || !user || isLoading.value,
 );
 
-async function vote(voteType: 'upvote' | 'downvote'): Promise<void> {
+async function vote(voteType: VoteType): Promise<void> {
   try {
     isLoading.value = true;
+    console.log(voteType);
     showSuccessToast('An error occured while voting');
   } catch {
     showErrorToast('An error occured while voting');
