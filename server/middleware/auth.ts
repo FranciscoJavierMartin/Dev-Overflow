@@ -18,6 +18,10 @@ const AUTHENTICATED_ENDPOINTS: { path: string; method: HTTPMethod }[] = [
     path: '/api/votes',
     method: 'POST',
   },
+  {
+    path: '/api/votes/has-voted',
+    method: 'GET',
+  },
 ];
 
 export default defineEventHandler(async (event) => {

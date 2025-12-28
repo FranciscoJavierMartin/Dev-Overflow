@@ -1,8 +1,12 @@
 import * as v from 'valibot';
 import { VoteType, VoteTarget } from '~/generated/prisma/client';
 
-export const createVoteSchema = v.object({
+export const hasUserVotedSchema = v.object({
   targetId: v.pipe(v.string(), v.nonEmpty(), v.cuid2()),
   targetType: v.pipe(v.enum(VoteTarget)),
+});
+
+export const createVoteSchema = v.object({
+  ...hasUserVotedSchema.entries,
   type: v.pipe(v.enum(VoteType)),
 });
