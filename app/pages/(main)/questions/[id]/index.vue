@@ -49,6 +49,9 @@
     <div v-if="data" class="mt-8 flex flex-wrap gap-2">
       <CardTagCompact v-for="tag in data?.tags" :key="tag.id" v-bind="tag" />
     </div>
+    <section class="my-5">
+      <QuestionAnswers :answers="answersData?.answers" />
+    </section>
     <section v-if="user" class="my-5">
       <QuestionFormAnswer :question-id="id" />
     </section>
@@ -58,6 +61,7 @@
 <script setup lang="ts">
 import { ROUTES } from '@/utils/constants/routes';
 import { Eye, MessageCircle, Clock } from 'lucide-vue-next';
+import type { Answer } from '~/generated/prisma/client';
 
 const route = useRoute();
 const { user } = useAuth();
@@ -68,6 +72,29 @@ const { data } = await useAsyncData<QuestionItem>(
   `question-${id.value}`,
   (_nuxtApp, { signal }) =>
     $fetch<QuestionItem>(`/api/questions/${id.value}`, {
+      signal,
+    }),
+  {
+    watch: [id],
+  },
+);
+
+const { data: answersData } = await useAsyncData<{
+  answers: Answer[];
+  totalAnswers: number;
+  isNext: boolean;
+}>(
+  `answers-${id.value}`,
+  (_nuxtApp, { signal }) =>
+    $fetch<{
+      answers: Answer[];
+      totalAnswers: number;
+      isNext: boolean;
+    }>('/api/answers', {
+      query: {
+        questionId: id,
+        sort: 'latest',
+      },
       signal,
     }),
   {

@@ -7,7 +7,6 @@ export default defineEventHandler(async (event) => {
     page: pageParam,
     pageSize: pageSizeParam,
     questionId,
-    filter,
     sort,
   } = await validateQueryParameters(event, paginatedAnswersSchema);
   const { skip, take } = calculatePageData({
