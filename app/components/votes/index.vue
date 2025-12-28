@@ -11,8 +11,8 @@
         <ArrowBigUp
           class="size-4.5 group-hover:fill-green-500 group-hover:text-green-500"
           :class="{
-            'fill-green-500 text-green-500': hasUpvoted,
-            'text-muted-foreground': !hasUpvoted,
+            'fill-green-500 text-green-500': data?.hasUpvoted,
+            'text-muted-foreground': !data?.hasUpvoted,
           }"
         />
       </Button>
@@ -33,8 +33,8 @@
         <ArrowBigDown
           class="group-hover:text-destructive group-hover:fill-destructive size-4.5"
           :class="{
-            'text-destructive fill-destructive': hasDownvoted,
-            'text-muted-foreground': !hasDownvoted,
+            'text-destructive fill-destructive': data?.hasDownvoted,
+            'text-muted-foreground': !data?.hasDownvoted,
           }"
         />
       </Button>
@@ -49,12 +49,13 @@
 
 <script setup lang="ts">
 import { ArrowBigDown, ArrowBigUp } from 'lucide-vue-next';
+import { VoteType, type VoteTarget } from '@/generated/prisma/enums';
 
-const { hasUpvoted, hasDownvoted } = defineProps<{
+const { targetId } = defineProps<{
+  type: VoteTarget;
+  targetId: string;
   upvotes: number;
-  hasUpvoted?: boolean;
   downvotes: number;
-  hasDownvoted?: boolean;
 }>();
 
 const isLoading = ref<boolean>(false);
@@ -63,11 +64,19 @@ const { user } = useAuth();
 const { showErrorToast, showSuccessToast } = useToast();
 
 const upvoteButtonDisabled = computed<boolean>(
-  () => hasUpvoted || hasDownvoted || !user || isLoading.value,
+  () =>
+    data.value?.hasUpvoted ||
+    data.value?.hasDownvoted ||
+    !user ||
+    isLoading.value,
 );
 
 const downvoteButtonDisabled = computed<boolean>(
-  () => hasDownvoted || hasUpvoted || !user || isLoading.value,
+  () =>
+    data.value?.hasDownvoted ||
+    data.value?.hasUpvoted ||
+    !user ||
+    isLoading.value,
 );
 
 async function vote(voteType: VoteType): Promise<void> {
@@ -81,4 +90,14 @@ async function vote(voteType: VoteType): Promise<void> {
     isLoading.value = false;
   }
 }
+
+const { data } = await useLazyFetch<{
+  hasUpvoted: boolean;
+  hasDownvoted: boolean;
+}>('/api/votes/has-voted', {
+  query: {
+    targetId,
+  },
+  watch: [() => targetId],
+});
 </script>

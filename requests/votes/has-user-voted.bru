@@ -5,14 +5,14 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/votes/has-voted?targetId={{questionId}}&targetType=question
+  url: {{baseUrl}}/votes/has-voted?targetId={{questionId}}
   body: none
   auth: inherit
 }
 
 params:query {
   targetId: {{questionId}}
-  targetType: question
+  ~targetType: question
 }
 
 settings {
