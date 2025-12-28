@@ -22,6 +22,10 @@ const AUTHENTICATED_ENDPOINTS: { path: string; method: HTTPMethod }[] = [
     path: '/api/votes/has-voted',
     method: 'GET',
   },
+  {
+    path: '/api/collections/toggle',
+    method: 'PUT',
+  },
 ];
 
 export default defineEventHandler(async (event) => {
