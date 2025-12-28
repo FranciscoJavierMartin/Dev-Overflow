@@ -18,7 +18,7 @@
       </Button>
       <div class="flex-center">
         <p class="text-dark-400 dark:text-light-900 text-sm font-medium">
-          {{ formatNumber(upvotes) }}
+          {{ formatNumber(upvotesCount) }}
         </p>
       </div>
     </div>
@@ -40,7 +40,7 @@
       </Button>
       <div class="flex-center pr-2.5">
         <p class="text-dark-400 dark:text-light-900 text-sm font-medium">
-          {{ formatNumber(downvotes) }}
+          {{ formatNumber(downvotesCount) }}
         </p>
       </div>
     </div>
@@ -51,7 +51,7 @@
 import { ArrowBigDown, ArrowBigUp } from 'lucide-vue-next';
 import { VoteType, type VoteTarget } from '@/generated/prisma/enums';
 
-const { targetId, type } = defineProps<{
+const { targetId, type, upvotes, downvotes } = defineProps<{
   type: VoteTarget;
   targetId: string;
   upvotes: number;
@@ -59,9 +59,21 @@ const { targetId, type } = defineProps<{
 }>();
 
 const isLoading = ref<boolean>(false);
+const upvotesCount = ref<number>(upvotes);
+const downvotesCount = ref<number>(downvotes);
 
 const { user } = useAuth();
 const { showErrorToast, showSuccessToast } = useToast();
+
+const { data } = await useLazyFetch<{
+  hasUpvoted: boolean;
+  hasDownvoted: boolean;
+}>('/api/votes/has-voted', {
+  query: {
+    targetId,
+  },
+  watch: [() => targetId],
+});
 
 const upvoteButtonDisabled = computed<boolean>(
   () => data.value?.hasUpvoted || !user || isLoading.value,
@@ -84,6 +96,20 @@ async function vote(voteType: VoteType): Promise<void> {
     });
 
     if (result) {
+      if (voteType === 'downvote') {
+        downvotesCount.value++;
+
+        if (data.value?.hasUpvoted) {
+          upvotesCount.value--;
+        }
+      } else {
+        upvotesCount.value++;
+
+        if (data.value?.hasDownvoted) {
+          downvotesCount.value--;
+        }
+      }
+
       const successMessage =
         voteType === 'upvote' ? 'Upvote successfully' : 'Downvote successfully';
       showSuccessToast(successMessage);
@@ -96,14 +122,4 @@ async function vote(voteType: VoteType): Promise<void> {
     isLoading.value = false;
   }
 }
-
-const { data } = await useLazyFetch<{
-  hasUpvoted: boolean;
-  hasDownvoted: boolean;
-}>('/api/votes/has-voted', {
-  query: {
-    targetId,
-  },
-  watch: [() => targetId],
-});
 </script>
