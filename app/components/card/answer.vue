@@ -25,7 +25,9 @@
           </p>
         </NuxtLink>
       </div>
-      <div class="flex justify-end">Votes</div>
+      <div class="flex justify-end">
+        <Votes :type="VoteTarget.answer" :target-id="id" :upvotes :downvotes />
+      </div>
     </div>
     <LazyQuestionPreview hydrate-on-visible :content />
   </article>
@@ -33,10 +35,13 @@
 
 <script setup lang="ts">
 import { ROUTES } from '@/utils/constants/routes';
+import { VoteTarget } from '@/generated/prisma/enums';
 
 defineProps<{
   id: string;
   content: string;
+  upvotes: number;
+  downvotes: number;
   createdAt: Date | string;
   author: Author;
 }>();

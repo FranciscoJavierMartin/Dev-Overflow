@@ -14,11 +14,8 @@
       <div class="mt-10 flex w-full flex-col gap-6">
         <CardAnswer
           v-for="answer in answers"
-          :id="answer.id"
           :key="answer.id"
-          :author="answer.author"
-          :content="answer.content"
-          :created-at="answer.createdAt"
+          v-bind="answer"
         />
       </div>
     </ListWrapper>
