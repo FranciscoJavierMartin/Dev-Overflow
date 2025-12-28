@@ -28,6 +28,7 @@ model User {
   accounts  Account[]
   questions Question[]
   answers   Answer[]
+  votes     Vote[]
 }
 
 model Session {
@@ -119,4 +120,25 @@ model Answer {
   authorId   String
   question   Question @relation(fields: [questionId], references: [id])
   questionId String
+}
+
+model Vote {
+  type     VoteType
+  target   VoteTarget
+  targetId String
+
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String
+
+  @@id([targetId, authorId])
+}
+
+enum VoteTarget {
+  question
+  answer
+}
+
+enum VoteType {
+  downvote
+  upvote
 }
