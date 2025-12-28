@@ -4,16 +4,19 @@
       <div class="flex w-full flex-col-reverse justify-between">
         <div class="flex-start gap-1">
           <UserAvatar
-            :id="data.author.id"
-            :name="data.author.name"
-            :image-url="data.author.image"
+            :id="data.question.author.id"
+            :name="data.question.author.name"
+            :image-url="data.question.author.image"
             class="size-5.5 text-xs"
           />
           <NuxtLink
-            :to="{ name: ROUTES.profile, params: { id: data.author.id } }"
+            :to="{
+              name: ROUTES.profile,
+              params: { id: data.question.author.id },
+            }"
           >
             <p class="paragraph-semibold text-dark-300 dark:text-light-700">
-              {{ data.author.name }}
+              {{ data.question.author.name }}
             </p>
           </NuxtLink>
         </div>
@@ -22,35 +25,39 @@
         </div>
       </div>
       <h2 class="h2-semibold text-dark-200 dark:text-light-900 mt-3.5 w-full">
-        {{ data.title }}
+        {{ data.question.title }}
       </h2>
     </div>
     <div v-if="data" class="mt-5 mb-8 flex flex-wrap gap-4">
       <CardMetricInfo
         :icon="Clock"
-        :value="`asked ${getTimeStamp(data?.createdAt ?? '')}`"
+        :value="`asked ${getTimeStamp(data.question.createdAt)}`"
         title=""
         text-class="small-medium text-dark-400 dark:text-light-700"
       />
       <CardMetricInfo
         :icon="MessageCircle"
-        :value="data?.answers ?? 0"
+        :value="data.totalAnswers"
         title="answers"
         text-class="small-medium text-dark-400 dark:text-light-700"
       />
       <CardMetricInfo
         :icon="Eye"
-        :value="formatNumber(data?.views ?? 0)"
+        :value="formatNumber(data.question.views)"
         title="views"
         text-class="small-medium text-dark-400 dark:text-light-700"
       />
     </div>
     <LazyQuestionPreview hydrate-on-visible />
     <div v-if="data" class="mt-8 flex flex-wrap gap-2">
-      <CardTagCompact v-for="tag in data?.tags" :key="tag.id" v-bind="tag" />
+      <CardTagCompact
+        v-for="tag in data.question.tags"
+        :key="tag.id"
+        v-bind="tag"
+      />
     </div>
-    <section class="my-5">
-      <QuestionAnswers :answers="answersData?.answers" />
+    <section v-if="data" class="my-5">
+      <QuestionAnswers :answers="data.answers" />
     </section>
     <section v-if="user" class="my-5">
       <QuestionFormAnswer :question-id="id" />
@@ -68,35 +75,33 @@ const { user } = useAuth();
 
 const id = computed<string>(() => route.params.id as string);
 
-const { data } = await useAsyncData<QuestionItem>(
-  `question-${id.value}`,
-  (_nuxtApp, { signal }) =>
-    $fetch<QuestionItem>(`/api/questions/${id.value}`, {
-      signal,
-    }),
-  {
-    watch: [id],
-  },
-);
-
-const { data: answersData } = await useAsyncData<{
+const { data } = await useAsyncData<{
+  question: QuestionItem;
   answers: Answer[];
   totalAnswers: number;
   isNext: boolean;
 }>(
-  `answers-${id.value}`,
-  (_nuxtApp, { signal }) =>
-    $fetch<{
-      answers: Answer[];
-      totalAnswers: number;
-      isNext: boolean;
-    }>('/api/answers', {
-      query: {
-        questionId: id,
-        sort: 'latest',
-      },
-      signal,
-    }),
+  `question-${id.value}`,
+  async (_nuxtApp, { signal }) => {
+    const [question, answers] = await Promise.all([
+      $fetch<QuestionItem>(`/api/questions/${id.value}`, {
+        signal,
+      }),
+      $fetch<{
+        answers: Answer[];
+        totalAnswers: number;
+        isNext: boolean;
+      }>('/api/answers', {
+        query: {
+          questionId: id.value,
+          sort: 'latest',
+        },
+        signal,
+      }),
+    ]);
+
+    return { question, ...answers };
+  },
   {
     watch: [id],
   },

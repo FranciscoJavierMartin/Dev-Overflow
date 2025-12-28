@@ -5,15 +5,14 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/answers?questionId={{questionId}}&page=1&pageSize=15
+  url: {{baseUrl}}/answers?questionId={{questionId}}&sort=latest
   body: none
   auth: inherit
 }
 
 params:query {
   questionId: {{questionId}}
-  page: 1
-  pageSize: 15
+  sort: latest
 }
 
 settings {
