@@ -5,8 +5,6 @@ export function calculatePageData({
   pageParam?: string | number;
   pageSizeParam?: string | number;
 }): {
-  page: number;
-  pageSize: number;
   skip: number;
   take: number;
 } {
@@ -16,8 +14,6 @@ export function calculatePageData({
   const take = pageSize;
 
   return {
-    page,
-    pageSize,
     skip,
     take,
   };

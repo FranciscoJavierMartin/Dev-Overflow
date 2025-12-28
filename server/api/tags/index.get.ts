@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     query,
     sort,
   } = await validateQueryParameters(event, paginatedSearchParamsSchema);
-  const { page, pageSize, skip, take } = calculatePageData({
+  const { skip, take } = calculatePageData({
     pageParam,
     pageSizeParam,
   });
