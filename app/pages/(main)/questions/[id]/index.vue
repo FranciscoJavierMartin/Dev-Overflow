@@ -21,7 +21,11 @@
           </NuxtLink>
         </div>
         <div class="flex justify-end">
-          <p>Votes</p>
+          <Votes
+            :upvotes="data.question.upvotes"
+            :downvotes="data.question.downvotes"
+            has-upvoted
+          />
         </div>
       </div>
       <h2 class="h2-semibold text-dark-200 dark:text-light-900 mt-3.5 w-full">
