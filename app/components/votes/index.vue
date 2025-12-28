@@ -5,15 +5,15 @@
         variant="ghost"
         size="icon"
         :disabled="upvoteButtonDisabled"
+        class="group"
         @click="vote('upvote')"
       >
         <ArrowBigUp
-          class="size-4.5"
+          class="size-4.5 group-hover:fill-green-500 group-hover:text-green-500"
           :class="{
-            'text-green-500': hasUpvoted,
+            'fill-green-500 text-green-500': hasUpvoted,
             'text-muted-foreground': !hasUpvoted,
           }"
-          :fill="hasUpvoted ? 'var(--color-green-500)' : 'none'"
         />
       </Button>
       <div class="flex-center">
@@ -26,16 +26,16 @@
       <Button
         variant="ghost"
         size="icon"
+        class="group"
         :disabled="downvoteButtonDisabled"
         @click="vote('downvote')"
       >
         <ArrowBigDown
-          class="size-4.5"
+          class="group-hover:text-destructive group-hover:fill-destructive size-4.5"
           :class="{
-            'text-destructive': hasDownvoted,
+            'text-destructive fill-destructive': hasDownvoted,
             'text-muted-foreground': !hasDownvoted,
           }"
-          :fill="hasDownvoted ? 'var(--destructive)' : 'none'"
         />
       </Button>
       <div class="flex-center pr-2.5">
@@ -60,7 +60,7 @@ const { hasUpvoted, hasDownvoted } = defineProps<{
 const isLoading = ref<boolean>(false);
 
 const { user } = useAuth();
-const { showErrorToast } = useToast();
+const { showErrorToast, showSuccessToast } = useToast();
 
 const upvoteButtonDisabled = computed<boolean>(
   () => hasUpvoted || hasDownvoted || !user || isLoading.value,
@@ -73,7 +73,7 @@ const downvoteButtonDisabled = computed<boolean>(
 async function vote(voteType: 'upvote' | 'downvote'): Promise<void> {
   try {
     isLoading.value = true;
-    showErrorToast('An error occured while voting');
+    showSuccessToast('An error occured while voting');
   } catch {
     showErrorToast('An error occured while voting');
   } finally {

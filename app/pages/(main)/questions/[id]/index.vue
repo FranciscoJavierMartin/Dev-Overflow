@@ -24,7 +24,6 @@
           <Votes
             :upvotes="data.question.upvotes"
             :downvotes="data.question.downvotes"
-            has-upvoted
           />
         </div>
       </div>

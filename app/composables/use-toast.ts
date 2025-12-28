@@ -7,7 +7,14 @@ export function useToast() {
     });
   }
 
+  function showSuccessToast(message: string) {
+    toast.success(message, {
+      richColors: true,
+    });
+  }
+
   return {
     showErrorToast,
+    showSuccessToast,
   };
 }
