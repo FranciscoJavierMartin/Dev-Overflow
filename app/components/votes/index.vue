@@ -72,7 +72,7 @@ const { data } = await useLazyFetch<{
   query: {
     targetId,
   },
-  watch: [() => targetId],
+  watch: [() => targetId, downvotesCount, upvotesCount],
 });
 
 const upvoteButtonDisabled = computed<boolean>(
