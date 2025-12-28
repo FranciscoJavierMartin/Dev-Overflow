@@ -50,7 +50,7 @@
 
 <script setup lang="ts">
 import { useForm } from '@tanstack/vue-form';
-import type { Answer } from '~/generated/prisma/client';
+import type { Answer } from '@/generated/prisma/client';
 import { answerQuestionSchema } from '~~/shared/utils/validations/schemas/question';
 
 const { questionId } = defineProps<{ questionId: string }>();

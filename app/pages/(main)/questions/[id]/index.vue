@@ -57,7 +57,7 @@
       />
     </div>
     <section v-if="data" class="my-5">
-      <QuestionAnswers
+      <AnswerList
         :answers="data.answers"
         :total-answers="data.totalAnswers"
         :error
@@ -66,7 +66,7 @@
       />
     </section>
     <section v-if="user" class="my-5">
-      <QuestionFormAnswer :question-id="id" />
+      <AnswerForm :question-id="id" />
     </section>
   </div>
 </template>
