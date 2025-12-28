@@ -9,15 +9,14 @@ import { paginatedSearchParamsSchema } from '~~/shared/utils/validations/schemas
 export default defineEventHandler(async (event) => {
   const { id } = await validateRouterParams(event, tagIdSchema);
   const {
-    page: pageParam = 1,
-    pageSize: pageSizeParam = 10,
+    page: pageParam,
+    pageSize: pageSizeParam,
     query,
   } = await validateQueryParameters(event, paginatedSearchParamsSchema);
-
-  const page = parseInt(pageParam.toString());
-  const pageSize = parseInt(pageSizeParam.toString());
-  const skip = (page - 1) * pageSize;
-  const take = pageSize;
+  const { page, pageSize, skip, take } = calculatePageData({
+    pageParam,
+    pageSizeParam,
+  });
   let filterQuery: QuestionWhereInput = {};
   const orderBy: QuestionOrderByWithRelationInput = {};
 
