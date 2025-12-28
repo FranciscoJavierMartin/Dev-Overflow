@@ -1,6 +1,6 @@
 <template>
-  <div class="flex-center gap-2.5">
-    <div class="flex-center gap-1.5">
+  <div class="flex-center bg-light-700 dark:bg-dark-400 gap-1.5 rounded-sm">
+    <div class="flex-center gap-0">
       <Button variant="ghost" size="icon">
         <ArrowBigUp
           class="size-4.5"
@@ -11,15 +11,13 @@
           :fill="hasUpvoted ? 'var(--color-green-500)' : 'none'"
         />
       </Button>
-      <div
-        class="flex-center bg-light-700 dark:bg-dark-400 min-w-5 rounded-sm p-1"
-      >
-        <p class="suble-medium text-dark-400 dark:text-light-900">
+      <div class="flex-center">
+        <p class="text-dark-400 dark:text-light-900 text-sm font-medium">
           {{ formatNumber(upvotes) }}
         </p>
       </div>
     </div>
-    <div class="flex-center gap-1.5">
+    <div class="flex-center gap-0">
       <Button variant="ghost" size="icon">
         <ArrowBigDown
           class="size-4.5"
@@ -30,10 +28,8 @@
           :fill="hasDownvoted ? 'var(--destructive)' : 'none'"
         />
       </Button>
-      <div
-        class="flex-center bg-light-700 dark:bg-dark-400 min-w-5 rounded-sm p-1"
-      >
-        <p class="suble-medium text-dark-400 dark:text-light-900">
+      <div class="flex-center pr-2.5">
+        <p class="text-dark-400 dark:text-light-900 text-sm font-medium">
           {{ formatNumber(downvotes) }}
         </p>
       </div>
