@@ -27,7 +27,10 @@
             :upvotes="data.question.upvotes"
             :downvotes="data.question.downvotes"
           />
-          <QuestionSave :question-id="data.question.id" is-saved />
+          <QuestionSave
+            :question-id="data.question.id"
+            :is-saved="isSaved?.isSaved"
+          />
         </div>
       </div>
       <h2 class="h2-semibold text-dark-200 dark:text-light-900 mt-3.5 w-full">
@@ -123,4 +126,15 @@ await useLazyFetch(`/api/questions/${id.value}`, {
   method: 'PATCH',
   server: false,
 });
+
+const { data: isSaved } = await useFetch<{ isSaved: boolean }>(
+  '/api/collections/has-saved',
+  {
+    query: {
+      id: id.value,
+      userId: user.value?.id ?? '',
+    },
+    watch: [id, user],
+  },
+);
 </script>

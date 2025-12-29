@@ -14,7 +14,7 @@ import { Star } from 'lucide-vue-next';
 
 const { isSaved: initialIsSaved, questionId } = defineProps<{
   questionId: string;
-  isSaved: boolean;
+  isSaved?: boolean;
 }>();
 
 const isLoading = ref<boolean>(false);
