@@ -5,14 +5,9 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/collections/has-saved?userId={{userId}}&id={{questionId}}
+  url: {{baseUrl}}/collections/{{questionId}}/has-saved
   body: none
   auth: inherit
-}
-
-params:query {
-  userId: {{userId}}
-  id: {{questionId}}
 }
 
 settings {

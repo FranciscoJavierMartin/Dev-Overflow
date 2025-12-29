@@ -23,8 +23,12 @@ const AUTHENTICATED_ENDPOINTS: { path: string; method: HTTPMethod }[] = [
     method: 'GET',
   },
   {
-    path: '/api/collections/toggle',
+    path: '/api/collections/',
     method: 'PUT',
+  },
+  {
+    path: '/api/collections/',
+    method: 'GET',
   },
 ];
 
