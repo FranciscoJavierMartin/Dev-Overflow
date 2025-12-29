@@ -69,10 +69,10 @@ defineProps<{
   id: string;
   title: string;
   tags: { id: string; name: string }[];
-  author: { id: string; name: string; image: string };
+  author: Author;
   upvotes: number;
   answers: number;
   views: number;
-  createdAt: Date;
+  createdAt: Date | string;
 }>();
 </script>

@@ -27,7 +27,7 @@ const AUTHENTICATED_ENDPOINTS: { path: string; method: HTTPMethod }[] = [
     method: 'PUT',
   },
   {
-    path: '/api/collections/',
+    path: '/api/collections',
     method: 'GET',
   },
 ];
