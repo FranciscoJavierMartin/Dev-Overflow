@@ -8,7 +8,7 @@
       </h1>
     </section>
     <section class="mt-11">
-      <SearchLocal :route-name="ROUTES.tag" />
+      <SearchInput :route-name="ROUTES.tag" />
     </section>
     <ListWrapper
       :data-length="data?.questions.length"

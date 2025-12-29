@@ -2,7 +2,7 @@
   <div>
     <h1 class="h1-bold text-dark-100 dark:text-light-900 text-3xl">Tags</h1>
     <section class="mt-11">
-      <SearchLocal :route-name="ROUTES.tag" />
+      <SearchInput :route-name="ROUTES.tag" />
     </section>
     <ListWrapper
       :data-length="data?.tags.length"

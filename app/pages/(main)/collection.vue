@@ -4,7 +4,7 @@
     <section
       class="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center"
     >
-      <SearchLocal :route-name="ROUTES.collection" />
+      <SearchInput :route-name="ROUTES.collection" />
     </section>
     <ListWrapper
       :data-length="data?.questions.length"

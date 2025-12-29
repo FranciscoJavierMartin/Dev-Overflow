@@ -12,7 +12,8 @@
       </Button>
     </section>
     <section class="mt-11">
-      <SearchLocal :route-name="ROUTES.home" />
+      <SearchInput :route-name="ROUTES.home" />
+      <SearchSort />
     </section>
     <SearchFilters />
     <ListWrapper

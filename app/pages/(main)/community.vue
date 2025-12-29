@@ -4,7 +4,7 @@
     <section
       class="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center"
     >
-      <SearchLocal :route-name="ROUTES.community" />
+      <SearchInput :route-name="ROUTES.community" />
     </section>
     <ListWrapper
       :data-length="data?.users.length"
