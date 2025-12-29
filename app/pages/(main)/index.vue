@@ -15,7 +15,11 @@
       class="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center"
     >
       <SearchInput :route-name="ROUTES.home" />
-      <SearchSort :options="HomePageSort" class="hidden md:flex" />
+      <SearchSort
+        :options="HomePageSort"
+        :default-value="sort"
+        class="hidden md:flex"
+      />
     </section>
     <SearchFilters />
     <ListWrapper
@@ -44,6 +48,7 @@ import { HomePageSort } from '@/utils/constants/sort';
 const route = useRoute();
 
 const query = computed<string>(() => (route.query.query as string) || '');
+const sort = computed<string>(() => (route.query.sort as string) || '');
 const filter = computed<string>(() => (route.query.filter as string) || '');
 const page = computed<number>(() => +(route.query.page || 1));
 const pageSize = computed<number>(() => +(route.query.pageSize || 10));
@@ -61,13 +66,14 @@ const { data, pending, error, status } = await useAsyncData<{
       query: {
         query: query.value,
         filter: filter.value,
+        sort: sort.value,
         page: page.value,
         pageSize: pageSize.value,
       },
       signal,
     }),
   {
-    watch: [query, filter, page, pageSize],
+    watch: [query, sort, filter, page, pageSize],
   },
 );
 </script>

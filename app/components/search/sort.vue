@@ -1,6 +1,6 @@
 <template>
   <div :class="cn('relative', $props.class)">
-    <Select v-model="value">
+    <Select v-model="sortValue">
       <SelectTrigger
         class="body-regular border-light-800 dark:border-light-800 bg-light-800 dark:bg-dark-300 text-dark-500 dark:text-light-700 border px-5 py-2.5"
         aria-label="Filter options"
@@ -28,9 +28,20 @@
 import type { HTMLAttributes } from 'vue';
 import { cn } from '@/lib/utils';
 
-defineProps<{
+const { defaultValue = '' } = defineProps<{
   options: { name: string; value: string }[];
+  defaultValue?: string;
   class?: HTMLAttributes['class'];
 }>();
-const value = defineModel<string>();
+const sortValue = ref<string>(defaultValue);
+
+const route = useRoute();
+const router = useRouter();
+
+watch(sortValue, (newValue) => {
+  router.push({
+    ...route,
+    query: { ...route.query, sort: newValue },
+  });
+});
 </script>
