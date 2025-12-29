@@ -127,8 +127,8 @@ await useLazyFetch(`/api/questions/${id.value}`, {
   server: false,
 });
 
-const { data: isSaved } = await useFetch<{ isSaved: boolean }>(
-  '/api/collections/has-saved',
+const { data: isSaved } = await useLazyFetch<{ isSaved: boolean }>(
+  `/api/collections/${id.value}/has-saved`,
   {
     query: {
       id: id.value,

@@ -29,7 +29,7 @@ async function save(): Promise<void> {
       isLoading.value = true;
 
       const data = await $fetch<{ success: boolean }>(
-        `/api/collections/toggle/${questionId}`,
+        `/api/collections/${questionId}/toggle`,
         { method: 'PUT' },
       );
 
