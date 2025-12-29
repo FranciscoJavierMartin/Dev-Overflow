@@ -24,6 +24,11 @@ export const EMPTY_ANSWERS = {
   message: 'The Answer could is empty. Add some keyword to make it rain',
 };
 
+export const EMPTY_USERS = {
+  title: 'No Users Found',
+  message: 'You are not along. The only one here. more user are coming soon',
+};
+
 export const DEFAULT_ERROR = {
   title: 'Something Went Wrong',
   message: 'Even our code can have a bad day. Give it another shot',

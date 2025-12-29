@@ -57,7 +57,7 @@ const { data, error, pending, status } = await useAsyncData<{
     return { questions };
   },
   {
-    watch: [user],
+    watch: [user, query, filter, page, pageSize],
     deep: true,
   },
 );

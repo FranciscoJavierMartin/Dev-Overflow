@@ -1,6 +1,6 @@
 <template>
   <NuxtLink :to="{ name: ROUTES.profile, params: { id } }">
-    <Avatar :class="$props.class">
+    <Avatar :class="cn('relative', $props.class)">
       <NuxtImg
         v-if="imageUrl"
         :src="imageUrl"
@@ -22,7 +22,8 @@
 
 <script setup lang="ts">
 import type { HTMLAttributes } from 'vue';
-import { ROUTES } from '~/utils/constants/routes';
+import { cn } from '@/lib/utils';
+import { ROUTES } from '@/utils/constants/routes';
 
 const { name } = defineProps<{
   id: string;
