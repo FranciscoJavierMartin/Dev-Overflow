@@ -1,0 +1,21 @@
+meta {
+  name: Is saved question
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/collections/has-saved?userId={{userId}}&id={{questionId}}
+  body: none
+  auth: inherit
+}
+
+params:query {
+  userId: {{userId}}
+  id: {{questionId}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
