@@ -11,9 +11,11 @@
         <NuxtLink :to="{ name: ROUTES.askQuestion }">Ask a question</NuxtLink>
       </Button>
     </section>
-    <section class="mt-11">
+    <section
+      class="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center"
+    >
       <SearchInput :route-name="ROUTES.home" />
-      <SearchSort />
+      <SearchSort :options="HomePageSort" class="hidden md:flex" />
     </section>
     <SearchFilters />
     <ListWrapper
@@ -37,6 +39,7 @@
 <script setup lang="ts">
 import { ROUTES } from '@/utils/constants/routes';
 import { EMPTY_QUESTIONS } from '@/utils/constants/lists';
+import { HomePageSort } from '@/utils/constants/sort';
 
 const route = useRoute();
 
