@@ -1,0 +1,15 @@
+meta {
+  name: Get community
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/community/users
+  body: none
+  auth: inherit
+}
+
+settings {
+  encodeUrl: true
+}
