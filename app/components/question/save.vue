@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import { Star } from 'lucide-vue-next';
 
-const { isSaved: initialIsSaved } = defineProps<{
+const { isSaved: initialIsSaved, questionId } = defineProps<{
   questionId: string;
   isSaved: boolean;
 }>();
@@ -27,7 +27,16 @@ async function save(): Promise<void> {
   if (!isLoading.value && user.value) {
     try {
       isLoading.value = true;
-      isSaved.value = !isSaved.value;
+
+      const data = await $fetch<{ success: boolean }>(
+        `/api/collections/toggle/${questionId}`,
+        { method: 'PUT' },
+      );
+
+      if (data?.success) {
+        isSaved.value = !isSaved.value;
+      }
+
       showSuccessToast(
         `Question ${isSaved.value ? 'saved' : 'unsaved'} successfully`,
       );
