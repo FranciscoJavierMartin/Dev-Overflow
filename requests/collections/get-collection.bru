@@ -5,9 +5,13 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/collections
+  url: {{baseUrl}}/collections?query=vue
   body: none
   auth: inherit
+}
+
+params:query {
+  query: vue
 }
 
 settings {

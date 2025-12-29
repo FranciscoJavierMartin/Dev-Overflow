@@ -1,5 +1,8 @@
 import type { User } from '@/generated/prisma/client';
-import type { CollectionOrderByWithRelationInput } from '@/generated/prisma/models';
+import type {
+  CollectionOrderByWithRelationInput,
+  CollectionWhereInput,
+} from '@/generated/prisma/models';
 import { prisma } from '~~/lib/prisma';
 import { paginatedSearchParamsSchema } from '~~/shared/utils/validations/schemas/question';
 
@@ -7,7 +10,6 @@ export default defineEventHandler(async (event) => {
   const {
     page: pageParam,
     pageSize: pageSizeParam,
-    filter,
     query,
     sort,
   } = await validateQueryParameters(event, paginatedSearchParamsSchema);
@@ -16,8 +18,29 @@ export default defineEventHandler(async (event) => {
     pageSizeParam,
   });
   const user: User = event.context.user;
-  // let filterQuery: QuestionWhereInput = {};
+  const filterQuery: CollectionWhereInput = {
+    authorId: user.id,
+  };
   const orderBy: CollectionOrderByWithRelationInput = {};
+
+  if (query) {
+    filterQuery.question = {
+      OR: [
+        {
+          title: {
+            mode: 'insensitive',
+            contains: query,
+          },
+        },
+        {
+          content: {
+            mode: 'insensitive',
+            contains: query,
+          },
+        },
+      ],
+    };
+  }
 
   switch (sort) {
     case 'newest':
@@ -40,9 +63,7 @@ export default defineEventHandler(async (event) => {
 
   const questions = (
     await prisma.collection.findMany({
-      where: {
-        authorId: user.id,
-      },
+      where: filterQuery,
       orderBy,
       skip,
       take,
