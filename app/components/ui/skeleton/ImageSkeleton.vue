@@ -20,7 +20,7 @@
     >
       {{ message }}
     </p>
-    <NuxtLink as-child :to="{ name: button?.toName }">
+    <NuxtLink v-if="button" as-child :to="{ name: button?.toName }">
       <Button
         class="paragraph-medium bg-primary-500 text-light-900 hover:bg-primary-500 min-h-11 rounded-lg px-4 py-3"
       >
