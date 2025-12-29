@@ -13,10 +13,8 @@
       :is-success="status === 'success'"
       :empty="EMPTY_USERS"
     >
-      <div class="mt-10 flex w-full flex-col gap-6">
-        <div v-for="user in data?.users" :key="user.id">
-          {{ user.name }}
-        </div>
+      <div class="mt-12 flex flex-wrap gap-6">
+        <CardUser v-for="user in data?.users" :key="user.id" :user />
       </div>
     </ListWrapper>
   </div>
